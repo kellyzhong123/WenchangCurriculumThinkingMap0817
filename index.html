@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌏 文昌國際教育課程設計思考地圖 | Wenchang Global Curriculum Thinking Map</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- docx Library for Word export -->
+    <script src="https://unpkg.com/docx@7.8.2/build/index.umd.js"></script>
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            800: '#1e40af',
+                            900: '#1e293b',
+                            950: '#0f172a'
+                        },
+                        sage: {
+                            50: '#f4f7f4',
+                            100: '#e3ebe3',
+                            300: '#a3b18a',
+                            500: '#52796f',
+                            700: '#354f52',
+                            900: '#2f3e46'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            html, body {
+                height: auto !important;
+                min-height: 0 !important;
+                overflow: visible !important;
+                background: white !important;
+                color: black !important;
+                display: block !important;
+            }
+            #main-content {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .card-box {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+        }
+        .page-transition {
+            animation: fadeIn 0.25s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="h-full bg-slate-50 text-slate-800 flex flex-col font-sans">
+
+    <!-- Navigation Bar -->
+    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 no-print shadow-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.navTo('home')">
+                <span class="text-xl sm:text-2xl">🌏</span>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base tracking-tight leading-tight text-white">文昌國際教育課程設計思考地圖</h1>
+                    <p class="text-[10px] text-slate-400 hidden sm:block">Wenchang Global Curriculum Thinking Map</p>
+                </div>
+            </div>
+
+            <nav class="flex items-center space-x-1 sm:space-x-2 text-xs font-medium">
+                <button onclick="app.navTo('home')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-house sm:mr-1"></i><span class="hidden sm:inline">首頁</span>
+                </button>
+                <button onclick="app.navTo('courses')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-folder-open sm:mr-1"></i><span class="hidden sm:inline">我的課程</span>
+                </button>
+                <button onclick="app.navTo('map')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-chart-pie sm:mr-1"></i><span class="hidden sm:inline">特質地圖</span>
+                </button>
+                <button onclick="app.navTo('globalCards')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-layer-group sm:mr-1"></i><span class="hidden sm:inline">全球思考卡</span>
+                </button>
+                <button onclick="app.navTo('about')" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-800 transition text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-circle-question sm:mr-1"></i><span class="hidden sm:inline">說明</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Progress Steps Bar -->
+        <div id="step-nav-bar" class="bg-slate-800 border-t border-slate-700/60 py-2 px-4 overflow-x-auto no-print hidden">
+            <div class="max-w-6xl mx-auto flex items-center justify-between min-w-[600px] text-xs space-x-1">
+                <button id="step-btn-1" onclick="app.goToStep(1)" class="px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700">① 看見</button>
+                <button id="step-btn-2" onclick="app.goToStep(2)" class="px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700">② 想深</button>
+                <button id="step-btn-3" onclick="app.goToStep(3)" class="px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700">③ 探究</button>
+                <button id="step-btn-4" onclick="app.goToStep(4)" class="px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700">④ 設計</button>
+                <button id="step-btn-5" onclick="app.goToStep(5)" class="px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700">⑤ 看見學習</button>
+                <button id="step-btn-6" onclick="app.goToStep(6)" class="px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700">⑥ 回頭看</button>
+                <button id="step-btn-overview" onclick="app.navTo('overview')" class="px-3 py-1.5 rounded-lg bg-brand-600 text-white font-bold hover:bg-brand-500 transition">📄 課程總覽</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="main-content" class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 md:p-8 space-y-8">
+        <!-- Dynamic content will be injected by JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-6 px-4 text-center text-xs space-y-2 no-print">
+        <p class="font-semibold text-slate-300">🌏 文昌國際教育課程設計思考地圖</p>
+        <p class="text-slate-400">從「我要教什麼」走向「學生真正理解什麼」</p>
+        <p class="text-slate-500 pt-1">本工具由臺北市文昌國民小學 鍾靜宜老師設計</p>
+        <p class="text-slate-500 text-[11px] max-w-2xl mx-auto leading-relaxed pt-1">
+            本工具參考概念本位、探究導向與以理解為核心的國際課程設計理念，並依文昌國小課程發展需求進行轉化與調整。
+        </p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700 text-xs flex items-center space-x-2 transition-all duration-300 opacity-0 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="toast-msg">已儲存變更</span>
+    </div>
+
+    <!-- Concept Modal -->
+    <div id="concept-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 space-y-6 shadow-2xl relative border border-slate-200" id="concept-modal-content">
+            <!-- Dynamic Modal Content -->
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-200 text-center">
+            <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">確定要刪除這份課程設計嗎？</h3>
+            <p class="text-xs text-slate-500">刪除後將無法恢復此紀錄。</p>
+            <div class="flex items-center justify-center space-x-3 pt-2">
+                <button onclick="app.closeConfirmModal()" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">
+                    取消
+                </button>
+                <button onclick="app.confirmDeleteCourse()" class="px-4 py-2 rounded-xl bg-red-600 text-white text-xs font-semibold hover:bg-red-700 transition shadow">
+                    確定刪除
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Storage Warning Modal -->
+    <div id="storage-warning-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-amber-200 text-left">
+            <div class="flex items-center space-x-3 text-amber-600">
+                <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+                <h3 class="text-base font-bold text-slate-900">本機儲存空間提醒</h3>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+                瀏覽器暫存寫入受限或無痕模式中，為了防止資料流失，請務必於完成後點選<strong>「下載 Word (.docx)」</strong>匯出檔案至您的電腦中妥善保存！
+            </p>
+            <div class="flex justify-end pt-2">
+                <button onclick="app.closeStorageWarningModal()" class="px-5 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition">
+                    我知道了
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic Script -->
+    <script>
+        // 12 CORE CONCEPTS WITH CHILD-FRIENDLY DESCRIPTIONS AND 15 QUESTIONS EACH
+        const CORE_CONCEPTS = [
+            {
+                id: 'Identity',
+                zh: '認同',
+                name: 'Identity｜認同',
+                childDesc: '我是誰？我喜歡什麼？我和別人有什麼一樣或不一樣的地方？',
+                desc: '我們如何理解自己，以及自己與群體、文化、地方和世界的關係。',
+                studentThink: '這個主題會不會讓學生重新看見自己？',
+                example: '自我介紹、個人興趣、家族故事、國家與文化認同。',
+                misunderstanding: '以為認同是固定不變的，忽略了人在成長中會不斷轉變。',
+                questions: {
+                    factual: [
+                        '我們的名字、外貌與興趣有哪些特色？',
+                        '我的家庭有哪些特別的傳統與生活習慣？',
+                        '在學校班級中，我扮演著什麼角色？',
+                        '臺灣有哪些代表性的文化符號與節慶特色？',
+                        '個人的身分證明文件（如健保卡、學生證）上記錄了哪些資訊？'
+                    ],
+                    conceptual: [
+                        '是什麼讓我們成為「獨一無二」的自己？',
+                        '個人的成長經驗如何影響我們看待自己的方式？',
+                        '我們如何在融入團體的同時，依然保持個人的特色？',
+                        '文化背景如何型塑一個人的價值觀與認同感？',
+                        '為什麼尊重他人的不同認同對社會和諧很重要？'
+                    ],
+                    debatable: [
+                        '一個人對自己的認識，是由自己決定還是由別人決定的？',
+                        '在社群媒體時代，網路上的形象算是真實的自己嗎？',
+                        '為了獲得朋友的認同，我們應該改變自己的個性嗎？',
+                        '穿著制服是會削弱個人的獨特性，還是增強團體的認同感？',
+                        '文化認同會隨著移民或搬家到新的國家而改變嗎？'
+                    ]
+                }
+            },
+            {
+                id: 'Relationship',
+                zh: '關係',
+                name: 'Relationship｜關係',
+                childDesc: '人與人、人和動物、人和環境之間是怎麼牽連在一起的？我們怎麼和身邊的人好好相處與合作？',
+                desc: '人、事物與環境之間如何彼此連結與影響。',
+                studentThink: '這件事情和誰有關？彼此之間如何相互作用？',
+                example: '生態系中的食物鏈、班級中的同儕合作、人與社區的互動。',
+                misunderstanding: '認為關係是單向且固定的，忽視了動態變化與互動。',
+                questions: {
+                    factual: [
+                        '在學校裡，有哪些人每天為我們提供服務與照顧？',
+                        '生態系中的食物鏈是怎麼連結與排列的？',
+                        '班級中的同儕合作有哪些常見的形式與分工？',
+                        '植物和陽光、水分、土壤之間有什麼關聯？',
+                        '社區裡的公共設施（如郵局、醫院、圖書館）是如何服務居民的？'
+                    ],
+                    conceptual: [
+                        '建立良好的人際關係需要哪些要素（例如尊重、傾聽、同理心）？',
+                        '當環境中的某一環節發生改變時，其他事物會受到什麼影響？',
+                        '衝突是怎麼產生的？我們如何建立健康的互動關係？',
+                        '人與自然的互動關係是如何隨時間與科技進步而演變的？',
+                        '為什麼團隊合作往往能達成一個人無法獨自完成的事？'
+                    ],
+                    debatable: [
+                        '吵架和意見不合，一定會破壞兩個人的關係嗎？',
+                        '科技與社群軟體是拉近了還是拉遠了人與人之間的真正距離？',
+                        '人類和陪伴寵物之間的關係，是平等的夥伴還是主僕關係？',
+                        '為了維持友好關係，我們是不是應該永遠順從朋友的意思？',
+                        '在競爭激烈的環境中，合作與競爭哪一個更能促進彼此的成長？'
+                    ]
+                }
+            },
+            {
+                id: 'Culture',
+                zh: '文化',
+                name: 'Culture｜文化',
+                childDesc: '世界各地的人有不同的生活方式、食物、節慶、藝術與想法，這些豐富的生活點滴就是文化！',
+                desc: '人們如何形成、表達與理解不同的生活方式、價值與意義。',
+                studentThink: '不同文化背景的人，為什麼會有不同的想法與做法？',
+                example: '世界各地的傳統節慶、飲食習慣、建築風格與禮儀習俗。',
+                misunderstanding: '將文化簡化為表象的「節慶或食物」，忽視深層的價值觀與歷史背景。',
+                questions: {
+                    factual: [
+                        '世界各國有哪些代表性的傳統服飾與特色飲食？',
+                        '端午節、中秋節與元宵節各自有哪些傳說由來與慶祝方式？',
+                        '臺灣原住民族的祭典有哪些傳統儀式與敬畏自然的禁忌？',
+                        '不同的傳統建築風格（如三合院、原住民石板屋）有哪些特色？',
+                        '各國打招呼問候的用語和肢體禮儀有哪些有趣的差異？'
+                    ],
+                    conceptual: [
+                        '文化是如何在人們的日常生活中被形成、傳承與改變的？',
+                        '為什麼氣候與地理環境會深刻影響一個地方的飲食與文化？',
+                        '語言如何展現一個文化的思考方式與核心價值觀？',
+                        '什麼是「文化多樣性」？它對人類社會有什麼不可或缺的價值？',
+                        '傳統文化習俗如何在現代科技社會中轉型與延續？'
+                    ],
+                    debatable: [
+                        '當傳統文化習俗與現代環保價值衝突時（如燒紙錢、放鞭炮），應該如何抉擇？',
+                        '流行文化（如動漫、K-pop）會削弱我們對在地傳統文化的重視嗎？',
+                        '是否所有的傳統文化習俗都值得被原封不動地保留下來？',
+                        '外來文化融合是豐富了在地文化，還是消滅了原本的文化特色？',
+                        '我們可以用自己的文化標準去評價或批評其他文化的習慣嗎？'
+                    ]
+                }
+            },
+            {
+                id: 'Interdependence',
+                zh: '相互依存',
+                name: 'Interdependence｜相互依存',
+                childDesc: '世界上沒有任何人和事物可以完全單獨存在。大家都是互相幫忙、互相牽連影響的喔！',
+                desc: '人、社會與環境彼此影響，沒有一件事情完全獨立存在。',
+                studentThink: '如果改變其中一件事情，還有哪些事情會跟著改變？',
+                example: '全球貿易供應鏈、氣候變遷對全球農作物的連鎖影響。',
+                misunderstanding: '以為事件是單獨發生的，沒看到背後龐大的網絡系統。',
+                questions: {
+                    factual: [
+                        '我們每天吃的學校午餐，食材來自哪些地方與行業的人？',
+                        '蜜蜂在植物傳粉與農作物生長過程中扮演什麼角色？',
+                        '一支智慧型手機的零組件與原料來自哪些國家？',
+                        '森林樹木與大氣中的二氧化碳和氧氣有什麼互動？',
+                        '學校各處室、老師與學生之間是如何相互配合運作的？'
+                    ],
+                    conceptual: [
+                        '為什麼全球化社會中，一個地方發生的事件會影響到全世界？',
+                        '自然界中的生物如何透過相互依存維持整個生態系的平衡？',
+                        '社會分工如何讓我們每一個人的日常生活得以順暢運作？',
+                        '當相互依存的網絡中有一環斷裂時，會發生什麼連鎖反應？',
+                        '我們如何理解「牽一髮而動全身」的系統性思考？'
+                    ],
+                    debatable: [
+                        '一個國家或地區有可能完全自給自足、完全不依賴其他地方嗎？',
+                        '相互依存度越高的社會，是不是也意味著風險與脆弱度越高？',
+                        '在團隊中，個人獨立發揮重要，還是互相依存合作比較重要？',
+                        '人類對大自然的依賴比較多，還是大自然對人類的依賴比較多？',
+                        '科技讓全世界連結得更緊密，這讓世界變得更安全還是更不安全？'
+                    ]
+                }
+            },
+            {
+                id: 'Sustainability',
+                zh: '永續',
+                name: 'Sustainability｜永續',
+                childDesc: '我們今天使用的資源，要怎麼做才可以讓未來的小朋友也有得用，不會把地球的資源用光光？',
+                desc: '我們如何在滿足現在需要的同時，也思考未來的人與環境。',
+                studentThink: '我們今天的選擇，會對未來造成什麼樣的影響？',
+                example: '減塑行動、再生能源的開發、資源循環再利用。',
+                misunderstanding: '以為永續只是「保護環境」，忽略了經濟與社會發展的平衡。',
+                questions: {
+                    factual: [
+                        '什麼是「可再生資源」與「不可再生資源」？',
+                        '垃圾分類中的資源回收可以再製造出哪些有用產品？',
+                        '太陽能、風力發電與水力發電的運作原理是什麼？',
+                        '塑膠垃圾在大自然中需要多久時間才能被完全分解？',
+                        '什麼是聯合國永續發展目標 (SDGs)？'
+                    ],
+                    conceptual: [
+                        '我們今天的生活習慣與消費選擇，如何影響未來世代的生活品質？',
+                        '永續發展如何兼顧環境保護、經濟發展與社會公平？',
+                        '「循環經濟」與傳統「取用-製造-廢棄」的模式有何不同？',
+                        '為什麼生物多樣性對地球生態系統的永續至關重要？',
+                        '我們如何定義什麼是「負責任的生產與消費」？'
+                    ],
+                    debatable: [
+                        '為了追求經濟發展與生活便利，適度的環境破壞是可以被接受的嗎？',
+                        '解決環保問題主要靠個人道德自律，還是政府強制立法限制？',
+                        '購買昂貴的綠色環保商品，真的能達到永續保護地球的目的嗎？',
+                        '天然資源開發如果能救治人類疾病，是否算符合永續原則？',
+                        '當未來世代的權益與現代人的當下生存需求衝突時，誰應該優先？'
+                    ]
+                }
+            },
+            {
+                id: 'Responsibility',
+                zh: '責任',
+                name: 'Responsibility｜責任',
+                childDesc: '我們做出的每個選擇與行動，都要勇敢面對結果。這就是對自己、對夥伴和地球負起責任！',
+                desc: '我們如何面對自己的選擇、行動及其影響。',
+                studentThink: '誰需要為這件事情負責？為什麼？',
+                example: '維護校園環境整潔、遵守社會秩序、作為全球公民的關懷。',
+                misunderstanding: '將責任視為「懲罰或負擔」，而非出於主動關懷與公民意識。',
+                questions: {
+                    factual: [
+                        '作為一名小學生，我們在校園裡有哪些日常的自我管理責任？',
+                        '班級幹部與掃地工作各有什麼明確的責任範疇？',
+                        '道路交通安全規則規定行人和駕駛人各自有哪些義務？',
+                        '養寵物需要承擔哪些具體的照護與生命責任？',
+                        '國民在社會中有哪些基本權利與法律義務？'
+                    ],
+                    conceptual: [
+                        '個人的「自由」與「責任」之間有什麼不可分割的關係？',
+                        '個人責任與集體公民責任有何不同？',
+                        '當我們看見不公正或問題發生時，旁觀者有責任介入嗎？',
+                        '責任感如何型塑一個人的品格與社會信任？',
+                        '我們對未來的地球環境承擔著怎樣的全球公民責任？'
+                    ],
+                    debatable: [
+                        '意外事件發生時，不知道規定的人需要負擔責任嗎？',
+                        '團體比賽輸了，隊長該負最大的責任，還是大家平均分擔？',
+                        '我們是否該為自己沒有直接造成的歷史或環境問題負責任？',
+                        '當個人良知與團體規則衝突時，負責任的做法是什麼？',
+                        '父母是否應該對未成年子女的一切言行舉止負完全法律責任？'
+                    ]
+                }
+            },
+            {
+                id: 'Perspective',
+                zh: '觀點',
+                name: 'Perspective｜觀點',
+                childDesc: '同一件事情，站在不同的位置、換不同的人來看，看到的景象和想法可能完全不一樣喔！',
+                desc: '同一件事情，不同的人可能因為經驗、需求與位置不同而有不同看法。',
+                studentThink: '如果換一個人的位置，他會怎麼看待這件事？',
+                example: '對於保護森林與開發林地的不同立場辯論。',
+                misunderstanding: '認為觀點只有「對」與「錯」，無法同理他人的背景。',
+                questions: {
+                    factual: [
+                        '從同一個物體的正面、側面上方觀察，形狀有何不同？',
+                        '當地居民與外地遊客對同一個觀光景點的感受是什麼？',
+                        '農夫、商人與消費者對農作物價格上漲有何不同反應？',
+                        '故事中的不同主角對事件過程的描述有何差異？',
+                        '歷史事件中，勝利方與失敗方的紀錄有什麼不同？'
+                    ],
+                    conceptual: [
+                        '個人的文化背景、生長經驗如何影響看待世界的方式？',
+                        '為什麼理解不同觀點有助於減輕偏見與衝突？',
+                        '什麼是「換位思考（同理心）」？我們如何練習它？',
+                        '媒體資訊如何型塑大眾看待事件的特定角度與立場？',
+                        '為什麼同一現象在科學、藝術與文學中會有不同解讀？'
+                    ],
+                    debatable: [
+                        '世界上每一件事情都有絕對的對與錯嗎？',
+                        '尊重不同觀點是否意味著我們必須同意對方的說法？',
+                        '少數人的觀點一定不如多數人的觀點正確嗎？',
+                        '在爭論中，立場中立與選邊站哪一個更有建設性？',
+                        '網路演算法只推薦我們喜歡看的新聞，這會拓寬還是窄化我們的觀點？'
+                    ]
+                }
+            },
+            {
+                id: 'Diversity',
+                zh: '多元',
+                name: 'Diversity｜多元',
+                childDesc: '每個人都不一樣！長相不同、想法不同、背景不同，這讓我們的世界變得繽紛又豐富多彩！',
+                desc: '人與群體在文化、經驗、能力、想法與生活方式上的差異。',
+                studentThink: '差異是問題，還是可以成為理解世界的資源？',
+                example: '不同生物物種的適應力、多元族群共榮的社會。',
+                misunderstanding: '將差異視為「阻礙」或「不正常」，而不是價值的展現。',
+                questions: {
+                    factual: [
+                        '自然界中有哪些不同種類的植物與動物適應方式？',
+                        '臺灣社會有哪些不同的族群（如客家、原住民、閩南、新住民）？',
+                        '我們班上有哪些不同的興趣、專長與學習風格？',
+                        '世界上有哪些不同的語言、文字與符號系統？',
+                        '不同音樂風格（如古典、爵士、流行、傳統）有哪些特徵？'
+                    ],
+                    conceptual: [
+                        '多元性如何讓生態系統與人類社會更具韌性與活力？',
+                        '差異與多樣性如何成為團隊合作與創新的養分？',
+                        '包容（Inclusion）與僅僅「容忍」差異有何本質區別？',
+                        '我們如何在擁抱多元的同時建立共通的群體凝聚力？',
+                        '刻板印象與偏見是如何產生的？我們如何跨越它們？'
+                    ],
+                    debatable: [
+                        '多元化會讓團體溝通變複雜，這是一種阻礙還是一種優勢？',
+                        '為了維持團隊效率，有時候是否應該犧牲個性、追求一致？',
+                        '當某種文化習俗侵犯他人基本人權時，我們還需要包容其多元性嗎？',
+                        '班級分組時，同質性分組還是異質多元分組比較好？',
+                        '追求多元化的過程中，會不會反而造成群體間的分裂？'
+                    ]
+                }
+            },
+            {
+                id: 'Equity',
+                zh: '公平',
+                name: 'Equity｜公平',
+                childDesc: '公平不是給每個人一模一樣的東西，而是給每個人最需要的幫忙，讓大家都能順利進行！',
+                desc: '如何根據不同的需要提供適切的支持與機會。',
+                studentThink: '公平一定代表每個人得到一模一樣的東西嗎？',
+                example: '無障礙設施的建置、個人化學習輔具。',
+                misunderstanding: '混淆「公平 (Equity)」與「平均 (Equality)」。',
+                questions: {
+                    factual: [
+                        '學校里的無障礙斜坡與電梯是提供給哪些人使用的？',
+                        '棒球比賽或跑步比賽中的讓分或起跑線設定規則是什麼？',
+                        '政府的所得稅制度中，不同收入者的稅率有何不同？',
+                        '課堂上老師對學習需求不同的同學提供哪些輔具或調整？',
+                        '圖書館或公車上的博愛座設定宗旨是什麼？'
+                    ],
+                    conceptual: [
+                        '「平均/一模一樣 (Equality)」與「公平/因材施教 (Equity)」有何不同？',
+                        '為什麼針對不同需求提供個別化支持才是真正的平等？',
+                        '社會中有哪些隱形的障礙會影響個人的公平競爭機會？',
+                        '公平如何影響一個社群的和諧、信任與正義感？',
+                        '我們如何辨識並消除生活中的不平等與歧視現象？'
+                    ],
+                    debatable: [
+                        '考試給予學習障礙學生額外的作答時間，對其他同學公平嗎？',
+                        '競賽中「人人有獎」與「擇優頒獎」，哪一種方式比較公平？',
+                        '資源有限時，應該先投注給表現優秀的人，還是最需要幫助的人？',
+                        '按勞分配（做多少得多少）與按需分配（需要多少給多少）何者更公平？',
+                        '齊頭式的平等等不等於真正的正義？'
+                    ]
+                }
+            },
+            {
+                id: 'Impact',
+                zh: '影響',
+                name: 'Impact｜影響',
+                childDesc: '我們所做的小小動作或決定，都會像水滴落入水裡激起漣漪一樣，產生好或壞的後果喔！',
+                desc: '行動、選擇或事件可能對自己、他人、社會與環境產生不同影響。',
+                studentThink: '這個選擇會影響誰？產生什麼後果？',
+                example: '塑膠微粒對海洋生態的長遠危害。',
+                misunderstanding: '只看到「立即的短期影響」，忽略了隱形或長遠的效應。',
+                questions: {
+                    factual: [
+                        '一次性塑膠袋的使用對海洋生物會造成什麼具體傷害？',
+                        '歷史上的重大發明（如印刷術、蒸汽機）改變了什麼？',
+                        '不吃早餐或熬夜對我們隔天的學習專注度有何影響？',
+                        '植樹造林對水土保持與氣溫有什麼直接效果？',
+                        '在公眾場台大聲喧嘩對身邊的人會產生什麼影響？'
+                    ],
+                    conceptual: [
+                        '行動與選擇如何產生短期、長期以及未預期的影響？',
+                        '個人小小的微小行動如何匯聚成對社會的巨大改變？',
+                        '我們如何預測並評估一個決策可能帶來的正面與負面影響？',
+                        '科技創新在改善生活的同時，可能帶來哪些負面衝擊？',
+                        '影響力是如何透過網絡系統擴散到遠方與未來的？'
+                    ],
+                    debatable: [
+                        '如果動機是好的，但最終帶來了壞的影響，這個行為值得肯定嗎？',
+                        '個人小小的減塑行為對全球氣候變遷真的能產生實質影響嗎？',
+                        '為了大多數人的正面影響，是否可以犧牲少數人的利益？',
+                        '社交媒體對青少年的影響，是正面效益大還是負面衝擊大？',
+                        '我們是否應該為自己意想不到、未預期到的後果負起責任？'
+                    ]
+                }
+            },
+            {
+                id: 'Choice',
+                zh: '選擇',
+                name: 'Choice｜選擇',
+                childDesc: '我們每天都有好多選擇！選什麼食物、做什麼決定，每個選擇背後都有機會和代價。',
+                desc: '人如何在不同可能性、限制與後果之間做出選擇。',
+                studentThink: '我們真的可以自由選擇嗎？哪些因素會影響選擇？',
+                example: '綠色消費者的選擇、綠色能源轉型政策。',
+                misunderstanding: '認為選擇是完全自由且沒有代價的。',
+                questions: {
+                    factual: [
+                        '我們每天中午在學校午餐時間有哪些選擇？',
+                        '買東西時，影響我們選擇該商品的因素有哪些（如價格、外觀、品牌）？',
+                        '課餘時間我們可以選擇從事哪些休閒活動？',
+                        '垃圾處理方式有哪些不同的選擇（如焚化、掩埋、回收）？',
+                        '選擇搭乘大眾運輸與騎自行車在時間與成本上有何差異？'
+                    ],
+                    conceptual: [
+                        '我們的選擇如何反映出我們內心重視的價值觀？',
+                        '什麼是「機會成本」？為什麼做出選擇就意味著放棄其他可能？',
+                        '哪些因素（如文化、家庭、廣告、經濟）會隱形限制或引導我們的選擇？',
+                        '我們如何在有限的條件與限制下做出智慧且負責任的決策？',
+                        '明智的選擇如何為自己和他人創造更多的可能性？'
+                    ],
+                    debatable: [
+                        '選擇越多真的會讓人越快樂、越自由嗎？',
+                        '小孩子是否有能力為自己做出關於健康與學習的所有選擇？',
+                        '為了保護民眾安全，政府是否應該限制個人的某些選擇自由？',
+                        '廣告與網紅推薦是幫助我們做出好選擇，還是操縱了我們的選擇？',
+                        '當個人最喜歡的選擇會對環境造成負擔時，我們應該如何抉擇？'
+                    ]
+                }
+            },
+            {
+                id: 'Action',
+                zh: '行動',
+                name: 'Action｜行動',
+                childDesc: '當我們想通了一個道理或發現問題後，動手去改變、去幫助別人，就是發揮強大的行動力！',
+                desc: '理解問題後，人如何把想法轉化成具體行動。',
+                studentThink: '理解問題之後，我們可以實際做些什麼？',
+                example: '發起減塑連署、倡導剩食分享計畫。',
+                misunderstanding: '以為行動必須是「驚天動地的偉大事蹟」，忽略微小的生活實踐。',
+                questions: {
+                    factual: [
+                        '校園中有哪些我們可以立即參與的環保或服務行動？',
+                        '歷史上有哪些發起改變的著名人物與他們的行動過程？',
+                        '當我們看到同學受傷或遭遇困難時，可以採取哪些應變步驟？',
+                        '發起一次剩食倡議活動需要準備哪些具體宣傳材料？',
+                        '社區志工團體日常進行哪些服務項目？'
+                    ],
+                    conceptual: [
+                        '理解問題（Knowledge）與採取行動（Action）之間有何連結？',
+                        '什麼是具備實踐力的公民行動？它如何促進社會進步？',
+                        '微小的日常個人行動如何轉化為集體的倡議與改變？',
+                        '在採取行動前，為什麼需要周詳的規劃與同理心的考量？',
+                        '遇到挫折與阻礙時，我們如何維持行動的持續力與韌性？'
+                    ],
+                    debatable: [
+                        '行動前如果沒有完美的計畫，先做了再修正比較好，還是想清楚再做比較好？',
+                        '標語宣導（倡議）算不算是真正有價值的實踐行動？',
+                        '個人微小的改變（如自備餐具）和推動政府修法，哪一種行動更有力？',
+                        '為了達成正義的行動目標，是否可以使用激進或破壞規則的手段？',
+                        '如果行動可能會失敗或得罪別人，我們還應該勇敢採取行動嗎？'
+                    ]
+                }
+            }
+        ];
+
+        // INQUIRY CARDS TEMPLATES
+        const INQUIRY_CARDS = [
+            { type: 'Notice', name: '🔎 發現卡｜Notice', prompt: '讓學生先看見一個現象或矛盾。', example: '為什麼我們明明知道食物很珍貴，還是會產生剩食？' },
+            { type: 'Connect', name: '🔗 連結卡｜Connect', prompt: '讓學生發現不同事物之間的關係。', example: '食物浪費和全球氣候變遷有什麼關聯？' },
+            { type: 'Perspective', name: '👀 觀點卡｜Perspective', prompt: '讓學生從不同位置與立場思考。', example: '廚師、農夫、學生與家長對剩食的看法有何不同？' },
+            { type: 'Compare', name: '⚖️ 比較卡｜Compare', prompt: '讓學生比較不同做法或情境。', example: '不同國家或文化對處理食物剩餘的方法有何差異？' },
+            { type: 'Challenge', name: '💭 挑戰卡｜Challenge', prompt: '挑戰學生原本理所當然的想法。', example: '「只要每個人吃光飯菜就能解決問題嗎？」這個說法完整嗎？' },
+            { type: 'Solve', name: '💡 解決卡｜Solve', prompt: '讓學生思考可能的解決方案。', example: '我們可以設計什麼樣的機制來減少校園廚餘？' },
+            { type: 'Act', name: '📣 行動卡｜Act', prompt: '讓學生思考理解之後可以採取的實踐。', example: '如果你真的想改變食物浪費問題，你會從哪裡開始？' }
+        ];
+
+        // EXPERIENCE CARDS TEMPLATES
+        const EXPERIENCE_TYPES = [
+            { id: 'Observe', name: '👀 Observe｜觀察' },
+            { id: 'Investigate', name: '🔎 Investigate｜調查' },
+            { id: 'Discuss', name: '🗣 Discuss｜討論' },
+            { id: 'Compare', name: '⚖️ Compare｜比較' },
+            { id: 'Connect', name: '🧩 Connect｜連結' },
+            { id: 'Test', name: '🧪 Test｜驗證' },
+            { id: 'Collaborate', name: '🤝 Collaborate｜合作' },
+            { id: 'Create', name: '🎨 Create｜創作' },
+            { id: 'Solve', name: '💡 Solve｜解決' },
+            { id: 'Advocate', name: '📣 Advocate｜倡議' },
+            { id: 'Act', name: '🌱 Act｜行動' },
+            { id: 'Reflect', name: '🪞 Reflect｜反思' }
+        ];
+
+        // PERFORMANCE TASKS LIST
+        const PERFORMANCE_TASKS = [
+            '海報製作｜Poster', '口頭發表｜Presentation', '訪談紀錄｜Interview',
+            '主題討論｜Discussion', '觀點辯論｜Debate', '專案提案｜Proposal',
+            '倡議宣導｜Campaign', '影片創作｜Video', '模型展示｜Model',
+            '學習反思｜Reflection', '真實行動｜Real-world Action', '其他自訂任務'
+        ];
+
+        class CurriculumApp {
+            constructor() {
+                this.courses = [];
+                this.currentCourseId = null;
+                this.currentView = 'home';
+                this.pendingDeleteId = null;
+                this.init();
+            }
+
+            init() {
+                this.loadCourses();
+                if (this.courses.length === 0) {
+                    this.createDemoCourse();
+                } else {
+                    this.currentCourseId = this.courses[0].id;
+                }
+                this.renderView('home');
+            }
+
+            loadCourses() {
+                try {
+                    const data = localStorage.getItem('wenchang_curriculum_courses');
+                    const parsed = data ? JSON.parse(data) : [];
+                    if (Array.isArray(parsed)) {
+                        this.courses = parsed.filter(item => item && typeof item === 'object' && item.id && typeof item.id === 'string');
+                    } else {
+                        this.courses = [];
+                    }
+                } catch (e) {
+                    console.error('Failed to load courses from localStorage', e);
+                    this.courses = [];
+                }
+            }
+
+            saveCourses() {
+                try {
+                    localStorage.setItem('wenchang_curriculum_courses', JSON.stringify(this.courses));
+                } catch (e) {
+                    console.error('Failed to save to localStorage', e);
+                    this.showStorageWarningModal();
+                }
+            }
+
+            showStorageWarningModal() {
+                const modal = document.getElementById('storage-warning-modal');
+                if (modal) modal.classList.remove('hidden');
+            }
+
+            closeStorageWarningModal() {
+                const modal = document.getElementById('storage-warning-modal');
+                if (modal) modal.classList.add('hidden');
+            }
+
+            escapeHtml(str) {
+                if (typeof str !== 'string') return '';
+                return str
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            triggerPrint() {
+                if (this.currentView !== 'overview') {
+                    this.navTo('overview');
+                    setTimeout(() => {
+                        window.print();
+                    }, 300);
+                } else {
+                    window.print();
+                }
+            }
+
+            exportWord() {
+                const c = this.getCurrentCourse();
+                try {
+                    const docxLib = window.docx || docx;
+                    if (!docxLib) {
+                        this.exportWordHtmlFallback();
+                        return;
+                    }
+
+                    const { Document, Packer, Paragraph, TextRun, HeadingLevel } = docxLib;
+
+                    const conceptNames = (c.selectedConcepts || []).map(id => {
+                        const found = CORE_CONCEPTS.find(x => x.id === id);
+                        return found ? found.name : id;
+                    }).join('、 ') || '無';
+
+                    const dirMap = {
+                        civic: '培養公民素養',
+                        collaboration: '激勵合作共學',
+                        learningHabits: '形塑學習習慣',
+                        creativeThinking: '應用創造思考',
+                        lifePractice: '落實生活實踐'
+                    };
+
+                    const visionMap = {
+                        moral: '品德 Moral & Citizenship',
+                        quality: '品質 Quality & Competence',
+                        taste: '品味 Taste & Life Application'
+                    };
+
+                    const children = [
+                        new Paragraph({ text: "臺北市文昌國民小學國際教育課程設計思考地圖", heading: HeadingLevel.TITLE }),
+                        new Paragraph({ text: `單元名稱：${c.title || '未命名課程'} (${c.grade || 'G5'} | ${c.domain || '跨領域'})` }),
+                        new Paragraph({ text: `設計教師：${c.teacher || '教師'} | 產出日期：${new Date().toLocaleDateString()}` }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "一、課程基本資料", heading: HeadingLevel.HEADING_1 }),
+                        new Paragraph({ text: `單元主題：${c.topic || '-'}` }),
+                        new Paragraph({ text: `年級：${c.grade || '-'} | 領域：${c.domain || '-'} | 教師：${c.teacher || '-'}` }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "二、課程起點", heading: HeadingLevel.HEADING_1 }),
+                        new Paragraph({ text: c.originalTeachingIntention || '無紀錄' }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "三、深層思考與核心概念 (Big Idea)", heading: HeadingLevel.HEADING_1 }),
+                        new Paragraph({ text: `深層思考：${c.deepThinking || '無紀錄'}` }),
+                        new Paragraph({ text: `選擇的核心概念：${conceptNames}` }),
+                        new Paragraph({ text: `🎯 Target Big Idea：${c.bigIdea || '無紀錄'}` }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "四、核心探究問題 (Inquiry Questions)", heading: HeadingLevel.HEADING_1 }),
+                        ...(c.inquiryQuestions && c.inquiryQuestions.length > 0
+                            ? c.inquiryQuestions.map(q => new Paragraph({ text: `• 【${q.type || '探究'}】${q.text}` }))
+                            : [new Paragraph({ text: "無紀錄" })]),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "五、探究學習活動 (Learning Experiences)", heading: HeadingLevel.HEADING_1 }),
+                        ...(c.learningExperiences && c.learningExperiences.length > 0
+                            ? c.learningExperiences.flatMap(exp => [
+                                new Paragraph({ text: `【${exp.type}】${exp.name}` }),
+                                new Paragraph({ text: `  - 學生要做：${exp.what || '-'}` }),
+                                new Paragraph({ text: `  - 可能發現：${exp.discovery || '-'}` }),
+                              ])
+                            : [new Paragraph({ text: "無紀錄" })]),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "六、跨領域連結", heading: HeadingLevel.HEADING_1 }),
+                        ...(c.crossCurricularConnections && c.crossCurricularConnections.filter(x => x.detail).length > 0
+                            ? c.crossCurricularConnections.filter(x => x.detail).map(cc => new Paragraph({ text: `• ${cc.domain}：${cc.detail}` }))
+                            : [new Paragraph({ text: "無特別設定" })]),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "七、理解證據與雙語表現任務", heading: HeadingLevel.HEADING_1 }),
+                        new Paragraph({ text: `理解證據描述：${c.evidence || '-'}` }),
+                        new Paragraph({ text: `雙語表現任務：${c.performanceTask || '-'}` }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "八、教師課後省思", heading: HeadingLevel.HEADING_1 }),
+                        new Paragraph({ text: `看見學生：${c.reflection?.student || '-'}` }),
+                        new Paragraph({ text: `看見課程：${c.reflection?.curriculum || '-'}` }),
+                        new Paragraph({ text: `下一次改進：${c.reflection?.nextTime || '-'}` }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "九、文昌學生發展的五個方向", heading: HeadingLevel.HEADING_1 }),
+                        ...Object.entries(dirMap).map(([key, name]) => {
+                            const val = c.studentDevelopment?.[key] || {};
+                            return new Paragraph({ text: `• ${name}：${val.level || '未標示'} ${val.evidence ? `(證據：${val.evidence})` : ''}` });
+                        }),
+                        new Paragraph({ text: " " }),
+
+                        new Paragraph({ text: "十、課程願景檢視 (品德、品質、品味)", heading: HeadingLevel.HEADING_1 }),
+                        ...Object.entries(visionMap).map(([key, name]) => {
+                            const val = c.curriculumVision?.[key] || {};
+                            return new Paragraph({ text: `• ${name}：${val.level || '未標示'} ${val.evidence ? `(證據：${val.evidence})` : ''}` });
+                        }),
+                        new Paragraph({ text: `其他發展特質：${c.otherTraits || '無'}` })
+                    ];
+
+                    const doc = new Document({
+                        sections: [{ properties: {}, children }]
+                    });
+
+                    Packer.toBlob(doc).then(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${c.title || '課程設計思考'}_文昌國小.docx`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                        this.showToast('已成功匯出完整 Word 檔案 (.docx)');
+                    }).catch(() => this.exportWordHtmlFallback());
+                } catch (e) {
+                    this.exportWordHtmlFallback();
+                }
+            }
+
+            exportWordHtmlFallback() {
+                const c = this.getCurrentCourse();
+                const conceptNames = (c.selectedConcepts || []).map(id => {
+                    const found = CORE_CONCEPTS.find(x => x.id === id);
+                    return found ? found.name : id;
+                }).join('、 ') || '無';
+
+                const dirNames = {
+                    civic: '培養公民素養',
+                    collaboration: '激勵合作共學',
+                    learningHabits: '形塑學習習慣',
+                    creativeThinking: '應用創造思考',
+                    lifePractice: '落實生活實踐'
+                };
+
+                const visionNames = {
+                    moral: '品德 Moral & Citizenship',
+                    quality: '品質 Quality & Competence',
+                    taste: '品味 Taste & Life Application'
+                };
+
+                const content = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset='utf-8'>
+                        <title>${this.escapeHtml(c.title || '課程設計思考')}</title>
+                        <style>
+                            body { font-family: 'Microsoft JhengHei', Arial, sans-serif; line-height: 1.6; color: #333; }
+                            h1 { color: #1e3a8a; font-size: 20pt; text-align: center; margin-bottom: 5px; }
+                            h2 { color: #1e40af; font-size: 14pt; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-top: 20px; }
+                            .sub { text-align: center; color: #64748b; font-size: 10pt; margin-bottom: 20px; }
+                            .box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; margin: 10px 0; border-radius: 6px; }
+                            ul { margin: 5px 0; padding-left: 20px; }
+                            li { margin-bottom: 4px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>臺北市文昌國民小學國際教育課程設計思考地圖</h1>
+                        <p class="sub">單元名稱：${this.escapeHtml(c.title || '未命名課程')} (${c.grade} | ${c.domain}) ｜ 設計教師：${this.escapeHtml(c.teacher || '教師')}</p>
+                        <hr/>
+
+                        <h2>一、課程基本資料</h2>
+                        <p><strong>單元主題：</strong>${this.escapeHtml(c.topic || '-')}</p>
+                        <p><strong>年級：</strong>${c.grade} ｜ <strong>領域：</strong>${c.domain} ｜ <strong>設計教師：</strong>${this.escapeHtml(c.teacher || '-')}</p>
+
+                        <h2>二、課程起點</h2>
+                        <p>${this.escapeHtml(c.originalTeachingIntention || '無紀錄')}</p>
+
+                        <h2>三、深層思考與核心概念 (Big Idea)</h2>
+                        <p><strong>深層思考：</strong>${this.escapeHtml(c.deepThinking || '無紀錄')}</p>
+                        <p><strong>選擇的核心概念：</strong>${this.escapeHtml(conceptNames)}</p>
+                        <div class="box">
+                            <strong>🎯 Target Big Idea：</strong>${this.escapeHtml(c.bigIdea || '無紀錄')}
+                        </div>
+
+                        <h2>四、核心探究問題 (Inquiry Questions)</h2>
+                        <ul>
+                            ${(c.inquiryQuestions || []).map(q => `<li>【${this.escapeHtml(q.type || '探究')}】${this.escapeHtml(q.text)}</li>`).join('') || '<li>無紀錄</li>'}
+                        </ul>
+
+                        <h2>五、探究學習活動 (Learning Experiences)</h2>
+                        ${(c.learningExperiences || []).map(exp => `
+                            <div class="box">
+                                <strong>【${this.escapeHtml(exp.type)}】${this.escapeHtml(exp.name)}</strong><br/>
+                                <strong>學生要做：</strong>${this.escapeHtml(exp.what || '-')}<br/>
+                                <strong>可能發現：</strong>${this.escapeHtml(exp.discovery || '-')}
+                            </div>
+                        `).join('') || '<p>無紀錄</p>'}
+
+                        <h2>六、跨領域連結</h2>
+                        <ul>
+                            ${(c.crossCurricularConnections || []).filter(x => x.detail).map(cc => `<li><strong>${this.escapeHtml(cc.domain)}：</strong>${this.escapeHtml(cc.detail)}</li>`).join('') || '<li>無特別設定</li>'}
+                        </ul>
+
+                        <h2>七、理解證據與雙語表現任務</h2>
+                        <p><strong>理解證據描述：</strong>${this.escapeHtml(c.evidence || '-')}</p>
+                        <p><strong>雙語表現任務：</strong>${this.escapeHtml(c.performanceTask || '-')}</p>
+
+                        <h2>八、教師課後省思</h2>
+                        <p><strong>看見學生：</strong>${this.escapeHtml(c.reflection?.student || '-')}</p>
+                        <p><strong>看見課程：</strong>${this.escapeHtml(c.reflection?.curriculum || '-')}</p>
+                        <p><strong>下一次改進：</strong>${this.escapeHtml(c.reflection?.nextTime || '-')}</p>
+
+                        <h2>九、文昌學生發展的五個方向</h2>
+                        <ul>
+                            ${Object.entries(dirNames).map(([key, name]) => {
+                                const val = c.studentDevelopment?.[key] || {};
+                                return `<li><strong>${name}：</strong>${val.level || '未標示'} ${val.evidence ? `(證據：${this.escapeHtml(val.evidence)})` : ''}</li>`;
+                            }).join('')}
+                        </ul>
+
+                        <h2>十、課程願景檢視 (品德、品質、品味)</h2>
+                        <ul>
+                            ${Object.entries(visionNames).map(([key, name]) => {
+                                const val = c.curriculumVision?.[key] || {};
+                                return `<li><strong>${name}：</strong>${val.level || '未標示'} ${val.evidence ? `(證據：${this.escapeHtml(val.evidence)})` : ''}</li>`;
+                            }).join('')}
+                        </ul>
+                        ${c.otherTraits ? `<p><strong>其他發展特質：</strong>${this.escapeHtml(c.otherTraits)}</p>` : ''}
+                    </body>
+                    </html>
+                `;
+                const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${c.title || '課程設計思考'}_文昌國小.doc`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.showToast('已下載 Word 備份文件 (.doc)');
+            }
+
+            createNewCourse() {
+                const newCourse = {
+                    id: 'course_' + Date.now(),
+                    title: '未命名國際教育單元',
+                    grade: 'G5',
+                    domain: '跨領域',
+                    teacher: '',
+                    topic: '',
+                    originalTeachingIntention: '',
+                    deepThinking: '',
+                    selectedConcepts: ['Responsibility', 'Impact'],
+                    bigIdea: '',
+                    inquiryQuestions: [],
+                    learningExperiences: [],
+                    crossCurricularConnections: [],
+                    evidence: '',
+                    performanceTask: '',
+                    reflection: { student: '', curriculum: '', nextTime: '' },
+                    studentDevelopment: {
+                        civic: { level: '', evidence: '' },
+                        collaboration: { level: '', evidence: '' },
+                        learningHabits: { level: '', evidence: '' },
+                        creativeThinking: { level: '', evidence: '' },
+                        lifePractice: { level: '', evidence: '' }
+                    },
+                    curriculumVision: {
+                        moral: { level: '', evidence: '' },
+                        quality: { level: '', evidence: '' },
+                        taste: { level: '', evidence: '' }
+                    },
+                    otherTraits: '',
+                    currentStep: 1,
+                    progress: 10,
+                    createdAt: new Date().toISOString().split('T')[0],
+                    updatedAt: new Date().toISOString().split('T')[0]
+                };
+                this.courses.unshift(newCourse);
+                this.currentCourseId = newCourse.id;
+                this.saveCourses();
+                this.renderView('step1');
+                this.showToast('已建立新課程思考單');
+            }
+
+            createDemoCourse() {
+                const demo = {
+                    id: 'demo_course_001',
+                    title: '珍惜食糧：午餐剩食大追蹤',
+                    grade: 'G5',
+                    domain: '跨領域',
+                    teacher: '鍾靜宜老師',
+                    topic: '校園與社區食物浪費議題',
+                    originalTeachingIntention: '讓學生了解台灣與全球食物浪費現況，統計學校各班級每週午餐剩食量，並了解廚餘處理方式。',
+                    deepThinking: '我希望學生理解：我們每天的飲食選擇，不只關乎個人的喜好，更與環境資源、全球供應鏈以及社會責任緊密相連。',
+                    selectedConcepts: ['Responsibility', 'Impact', 'Sustainability', 'Choice'],
+                    bigIdea: '人們在日常生活中的飲食選擇與消費習慣，會對環境與資源產生深遠影響，我們能透過負責任的行動促進永續發展。',
+                    inquiryQuestions: [
+                        { id: 'q1', type: 'Notice', text: '為什麼我們明明知道食物很珍貴，學校午餐還是會產生大量廚餘？' },
+                        { id: 'q2', type: 'Perspective', text: '對於午餐剩食，學生、廚師、農夫與學校管理者可能各自有什麼不同看法？' },
+                        { id: 'q3', type: 'Act', text: '如果我們想在文昌國小推動減量剩食，可以採取哪些實際又可行的行動？' }
+                    ],
+                    learningExperiences: [
+                        { id: 'e1', type: 'Investigate', name: '校園廚餘重量紀錄與分析', what: '各組連一週記錄全校各年級午餐桶廚餘重量與菜色。', discovery: '發現蔬菜與豆類剩量最多，低年級對菜色的偏好明顯影響剩食量。' },
+                        { id: 'e2', type: 'Discuss', name: '利害關係人立場對話角色扮演', what: '分組扮演農夫、廚師阿姨、營養師與挑食學生進行立場對話。', discovery: '體會到農夫辛勤耕作與廚師備餐的辛苦，理解選擇背後的責任。' }
+                    ],
+                    crossCurricularConnections: [
+                        { domain: '數學', detail: '計算各年級剩食重量百分比與統計圖表繪製' },
+                        { domain: '自然', detail: '探討廚餘堆肥轉化與生態有機循環機制' }
+                    ],
+                    evidence: '學生能說明自己的午餐選擇如何影響剩食，並能考慮同儕與廚師觀點，提出一份全校性的「剩食減量減碳行動提案」。',
+                    performanceTask: '專案提案｜Proposal',
+                    reflection: {
+                        student: '小明在分組扮演農夫時表示：「原來丟掉半碗飯，等於把農夫好幾個月的汗水丟掉」，顯示出深刻同理心。',
+                        curriculum: '統計調查活動讓數據具備說服力，下一次可增加訪問午餐廚師阿姨的環節。',
+                        nextTime: '可邀請社區里長或有機農夫入校分享，強化與社區的連結。'
+                    },
+                    studentDevelopment: {
+                        civic: { level: '很有關', evidence: '學生關心校園公共剩食議題並願意承擔社會責任。' },
+                        collaboration: { level: '很有關', evidence: '透過分組調查與角色扮演進行溝通與合作。' },
+                        learningHabits: { level: '有一點關係', evidence: '持續一週進行每日數據記錄與統計分析。' },
+                        creativeThinking: { level: '很有關', evidence: '設計有創意的剩食減量宣傳圖卡與校園機制。' },
+                        lifePractice: { level: '很有關', evidence: '將珍惜食物的習慣帶回日常午餐與家庭列表中。' }
+                    },
+                    curriculumVision: {
+                        moral: { level: '很有關', evidence: '學會尊重農夫勞動成果，對自己的飲食選擇負責任。' },
+                        quality: { level: '很有關', evidence: '透過真實數據探究問題並提出改進方案。' },
+                        taste: { level: '有一點關係', evidence: '品味食物的天然價值與了解不同文化的飲食智慧。' }
+                    },
+                    otherTraits: '同理心、系統思考力',
+                    currentStep: 6,
+                    progress: 100,
+                    createdAt: '2026-09-01',
+                    updatedAt: '2026-09-15'
+                };
+                this.courses = [demo];
+                this.currentCourseId = demo.id;
+                this.saveCourses();
+            }
+
+            getCurrentCourse() {
+                return this.courses.find(c => c.id === this.currentCourseId) || this.courses[0];
+            }
+
+            updateCourseField(field, value) {
+                const c = this.getCurrentCourse();
+                if (!c) return;
+                c[field] = value;
+                c.updatedAt = new Date().toISOString().split('T')[0];
+                this.saveCourses();
+                this.showToast('已自動儲存');
+            }
+
+            showToast(msg) {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toast-msg');
+                if (toast && toastMsg) {
+                    toastMsg.innerText = msg;
+                    toast.classList.remove('opacity-0', 'pointer-events-none');
+                    toast.classList.add('opacity-100');
+                    setTimeout(() => {
+                        toast.classList.remove('opacity-100');
+                        toast.classList.add('opacity-0', 'pointer-events-none');
+                    }, 2000);
+                }
+            }
+
+            navTo(view) {
+                this.currentView = view;
+                this.renderView(view);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            goToStep(stepNum) {
+                const c = this.getCurrentCourse();
+                if (c) {
+                    c.currentStep = stepNum;
+                    c.progress = Math.min(100, Math.round((stepNum / 6) * 100));
+                    this.saveCourses();
+                }
+                this.navTo(`step${stepNum}`);
+            }
+
+            renderView(view) {
+                const main = document.getElementById('main-content');
+                const stepBar = document.getElementById('step-nav-bar');
+                if (!main) return;
+
+                if (stepBar) {
+                    if (view.startsWith('step') || view === 'overview') {
+                        stepBar.classList.remove('hidden');
+                        
+                        // Highlight active step button
+                        for (let i = 1; i <= 6; i++) {
+                            const btn = document.getElementById(`step-btn-${i}`);
+                            if (btn) {
+                                if (view === `step${i}`) {
+                                    btn.className = "px-3 py-1.5 rounded-lg font-bold bg-brand-600 text-white shadow-sm transition";
+                                } else {
+                                    btn.className = "px-3 py-1.5 rounded-lg transition font-medium text-slate-300 hover:bg-slate-700";
+                                }
+                            }
+                        }
+                        const overviewBtn = document.getElementById('step-btn-overview');
+                        if (overviewBtn) {
+                            if (view === 'overview') {
+                                overviewBtn.className = "px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-bold shadow-sm transition";
+                            } else {
+                                overviewBtn.className = "px-3 py-1.5 rounded-lg bg-brand-600 text-white font-bold hover:bg-brand-500 transition";
+                            }
+                        }
+                    } else {
+                        stepBar.classList.add('hidden');
+                    }
+                }
+
+                switch (view) {
+                    case 'home': main.innerHTML = this.templateHome(); break;
+                    case 'step1': main.innerHTML = this.templateStep1(); break;
+                    case 'step2': main.innerHTML = this.templateStep2(); break;
+                    case 'step3': main.innerHTML = this.templateStep3(); break;
+                    case 'step4': main.innerHTML = this.templateStep4(); break;
+                    case 'step5': main.innerHTML = this.templateStep5(); break;
+                    case 'step6': main.innerHTML = this.templateStep6(); break;
+                    case 'overview': main.innerHTML = this.templateOverview(); break;
+                    case 'courses': main.innerHTML = this.templateCourses(); break;
+                    case 'map': main.innerHTML = this.templateMap(); break;
+                    case 'globalCards': main.innerHTML = this.templateGlobalCards(); break;
+                    case 'about': main.innerHTML = this.templateAbout(); break;
+                    default: main.innerHTML = this.templateHome(); break;
+                }
+            }
+
+            templateHome() {
+                const activeCourse = this.getCurrentCourse();
+                return `
+                    <div class="space-y-12 page-transition">
+                        <!-- Backup Notice Banner -->
+                        <div class="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 flex items-start space-x-3 text-xs text-amber-900 shadow-sm">
+                            <i class="fa-solid fa-shield-halved text-amber-600 text-lg mt-0.5 shrink-0"></i>
+                            <div class="leading-relaxed">
+                                <strong>💡 資料儲存與備份提醒：</strong>本工具預設將課程儲存於當前瀏覽器中。清理瀏覽器快取、使用無痕模式或更換電腦皆可能導致儲存資料清除。完成課程後，請務必點選「下載 Word (.docx)」將檔案匯出儲存至您的電腦。
+                            </div>
+                        </div>
+
+                        <!-- Hero Header -->
+                        <div class="bg-gradient-to-br from-slate-900 via-brand-900 to-slate-800 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-700/50 relative overflow-hidden">
+                            <div class="relative z-10 space-y-4 max-w-3xl">
+                                <div class="inline-flex items-center space-x-2 bg-brand-500/20 text-brand-200 border border-brand-400/30 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <span>🌏 臺北市文昌國小專用</span>
+                                </div>
+                                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                                    文昌國際教育課程設計思考地圖
+                                </h1>
+                                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                    從「我要教什麼」走向「學生真正理解什麼」。每一個課程設計，都從一個問題開始。我們不需要一次完成完美的課程，只需要先把一個單元想清楚一點。
+                                </p>
+                                <div class="pt-4 flex flex-wrap gap-3">
+                                    <button onclick="app.createNewCourse()" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition flex items-center space-x-2 text-sm">
+                                        <i class="fa-solid fa-plus"></i>
+                                        <span>＋ 開始新的課程設計</span>
+                                    </button>
+                                    ${activeCourse ? `
+                                        <button onclick="app.goToStep(${activeCourse.currentStep || 1})" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-xl font-semibold transition flex items-center space-x-2 text-sm">
+                                            <i class="fa-solid fa-play"></i>
+                                            <span>繼續上次課程：${this.escapeHtml(activeCourse.title)}</span>
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6 Stations Grid -->
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                                    <span>🗺 六大課程設計思考站</span>
+                                </h2>
+                                <span class="text-xs text-slate-500">這不是教案表格，而是陪你一步步思考的腳步</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                                ${[
+                                    { step: 1, title: '① 看見', sub: '我正在教什麼？', desc: '從你熟悉的單元與教學初衷開始，不需急著重新設計。' },
+                                    { step: 2, title: '② 想深', sub: '這個主題背後值得理解什麼？', desc: '探索概念 (Core Concepts)，凝聚核心理解 (Big Idea)。' },
+                                    { step: 3, title: '③ 探究', sub: '學生值得問什麼？', desc: '運用發現、連結與觀點探究卡，設計引發思考的問題。' },
+                                    { step: 4, title: '④ 設計', sub: '學生要經歷什麼，才有機會自己發現？', desc: '規劃以學生為中心的學習經驗與跨領域連結。' },
+                                    { step: 5, title: '⑤ 看見學習', sub: '我怎麼知道學生真的懂了？', desc: '選擇對應的理解證據與合適的雙語表現任務。' },
+                                    { step: 6, title: '⑥ 回頭看', sub: '這一次的課程讓我發現什麼？', desc: '進行課後反思，並看見課程正在培養的文昌學生特質。' }
+                                ].map(s => `
+                                    <div onclick="app.goToStep(${s.step})" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-brand-300 transition cursor-pointer flex flex-col justify-between group">
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">STEP 0${s.step}</span>
+                                                <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-brand-600 transition"></i>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-slate-900 group-hover:text-brand-600 transition">${s.title}</h3>
+                                            <p class="text-xs font-semibold text-brand-800">${s.sub}</p>
+                                            <p class="text-xs text-slate-500 leading-relaxed pt-1">${s.desc}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Quick Navigation Hub -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4">
+                            <button onclick="app.navTo('globalCards')" class="p-5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 transition text-left space-y-2 shadow-sm">
+                                <i class="fa-solid fa-layer-group text-2xl text-brand-400"></i>
+                                <h3 class="font-bold text-base">🃏 探索全球思考卡</h3>
+                                <p class="text-xs text-slate-400">查看 12 核心概念、探究卡、經驗卡與提問庫</p>
+                            </button>
+
+                            <button onclick="app.navTo('map')" class="p-5 rounded-2xl bg-sage-700 text-white hover:bg-sage-900 transition text-left space-y-2 shadow-sm">
+                                <i class="fa-solid fa-chart-pie text-2xl text-sage-100"></i>
+                                <h3 class="font-bold text-base">🌏 文昌共同學生特質地圖</h3>
+                                <p class="text-xs text-sage-100/80">看見全校課程共同培養的學生特質與願景樣貌</p>
+                            </button>
+
+                            <button onclick="app.navTo('about')" class="p-5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition text-left space-y-2 shadow-sm">
+                                <i class="fa-solid fa-circle-question text-2xl text-slate-600"></i>
+                                <h3 class="font-bold text-base text-slate-900">❓ 這個工具怎麼使用？</h3>
+                                <p class="text-xs text-slate-500">了解設計理念、備課態度與常見說明</p>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            templateStep1() {
+                const c = this.getCurrentCourse();
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Step Header -->
+                        <div class="space-y-2 border-b border-slate-200 pb-5">
+                            <div class="flex items-center space-x-2 text-brand-900 text-sm font-bold">
+                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs">1</span>
+                                <span>第一站</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">① 看見：我們正在教什麼？</h2>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                先從你熟悉的課程開始，不需要重新設計。<br>
+                                把你平時就在教的內容講出來就好。
+                            </p>
+                        </div>
+
+                        <!-- Form Card -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="block text-xs font-bold text-slate-700">單元／主題名稱</label>
+                                    <input type="text" value="${this.escapeHtml(c.topic || '')}" 
+                                        oninput="app.updateCourseField('topic', this.value); app.updateCourseField('title', this.value || '未命名課程');" 
+                                        placeholder="例如：食物浪費、水資源、我的社區..." 
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-xs text-slate-800">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="block text-xs font-bold text-slate-700">設計教師</label>
+                                    <input type="text" value="${this.escapeHtml(c.teacher || '')}" 
+                                        oninput="app.updateCourseField('teacher', this.value)" 
+                                        placeholder="例如：王大明老師..." 
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-xs text-slate-800">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="block text-xs font-bold text-slate-700">年級</label>
+                                    <select onchange="app.updateCourseField('grade', this.value)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-xs text-slate-800 bg-white">
+                                        ${['G1','G2','G3','G4','G5','G6'].map(g => `<option value="${g}" ${c.grade === g ? 'selected' : ''}>${g}</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-xs font-bold text-slate-700">領域</label>
+                                    <select onchange="app.updateCourseField('domain', this.value)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-xs text-slate-800 bg-white">
+                                        ${['國語','英語','數學','社會','自然','藝術','健體','綜合','資訊','跨領域','其他'].map(d => `<option value="${d}" ${c.domain === d ? 'selected' : ''}>${d}</option>`).join('')}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 pt-2">
+                                <label class="block text-xs font-bold text-slate-700">原本這個單元，我最想教學生的是：</label>
+                                <textarea rows="4" oninput="app.updateCourseField('originalTeachingIntention', this.value)" 
+                                    placeholder="學生需要知道什麼知識或技能？原本我會怎麼教這個單元？" 
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-xs text-slate-800 leading-relaxed">${this.escapeHtml(c.originalTeachingIntention || '')}</textarea>
+                            </div>
+
+                            <div class="bg-brand-50 p-4 rounded-xl border border-brand-100 text-xs text-brand-900 flex items-start space-x-3">
+                                <i class="fa-solid fa-lightbulb text-brand-600 text-base mt-0.5"></i>
+                                <div>
+                                    <strong>💡 溫馨提示：</strong>先不用急著想概念 (Concept)。先把你熟悉的課本內容、教學目標講出來就可以了。
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between pt-4">
+                            <button onclick="app.navTo('home')" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回首頁
+                            </button>
+                            <button onclick="app.goToStep(2)" class="px-6 py-2.5 rounded-xl bg-brand-900 hover:bg-brand-800 text-white font-medium text-xs shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                                <span>開始往深處想</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            templateStep2() {
+                const c = this.getCurrentCourse();
+                if (!c.selectedConcepts) c.selectedConcepts = [];
+
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Step Header -->
+                        <div class="space-y-2 border-b border-slate-200 pb-5">
+                            <div class="flex items-center space-x-2 text-brand-900 text-sm font-bold">
+                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs">2</span>
+                                <span>第二站</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">② 想深：這個主題背後值得理解什麼？</h2>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                我們先不要急著改活動。<br>
+                                請想一想：<span class="font-bold text-brand-900">如果學生五年後忘記今天學到的知識，你希望他還留下什麼？</span>
+                            </p>
+                        </div>
+
+                        <!-- Deep Thinking Box -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                                <span>💭 Deep Thinking｜想深一點</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                這個主題為什麼值得學生學？它和誰有關？會帶來什麼影響？人們為什麼有不同選擇？我希望學生未來遇到類似情況時能想到什麼？
+                            </p>
+                            <textarea rows="4" oninput="app.updateCourseField('deepThinking', this.value)" 
+                                placeholder="我希望學生最後真正理解的是..." 
+                                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-xs text-slate-800 leading-relaxed">${this.escapeHtml(c.deepThinking || '')}</textarea>
+                        </div>
+
+                        <!-- Concepts Picker -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-base font-bold text-slate-900">🔍 你可能正在碰觸這些核心概念 (Core Concepts)</h3>
+                                    <p class="text-xs text-slate-500">請挑選 1–3 個與你課程最相關的大概念：</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 pt-2">
+                                ${CORE_CONCEPTS.map(concept => {
+                                    const isSelected = c.selectedConcepts.includes(concept.id);
+                                    return `
+                                        <div class="p-3 rounded-xl border transition cursor-pointer flex flex-col justify-between space-y-2 ${isSelected ? 'bg-brand-50 border-brand-500 text-brand-900 font-bold shadow-sm' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'}"
+                                             onclick="app.toggleConcept('${concept.id}')">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-xs font-bold">${this.escapeHtml(concept.name)}</span>
+                                                <i class="fa-solid ${isSelected ? 'fa-circle-check text-brand-600' : 'fa-circle text-slate-300'} text-sm"></i>
+                                            </div>
+                                            <p class="text-[11px] text-slate-500 line-clamp-2 leading-tight font-normal">${this.escapeHtml(concept.desc)}</p>
+                                            <button onclick="event.stopPropagation(); app.showConceptDetailModal('${concept.id}')" class="text-[11px] text-brand-600 hover:underline text-left pt-1 font-normal">
+                                                🔍 查看卡片細節
+                                            </button>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Big Idea Generator -->
+                        <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-4">
+                            <div class="space-y-1">
+                                <h3 class="text-lg font-bold text-brand-300">💡 凝聚我們的核心理解 Target Big Idea</h3>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    把剛剛選擇的概念串在一起。最重要的是：這是不是你真正想讓學生帶走的理解？
+                                </p>
+                            </div>
+
+                            <div class="space-y-3 pt-2">
+                                <textarea id="input-bigidea" rows="3" oninput="app.updateCourseField('bigIdea', this.value)" 
+                                    placeholder="範例：人們在日常生活中的飲食選擇，會對環境資源產生深遠影響..." 
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:ring-2 focus:ring-brand-500 outline-none text-xs leading-relaxed">${this.escapeHtml(c.bigIdea || '')}</textarea>
+
+                                <div class="flex items-center justify-between">
+                                    <button onclick="app.generateBigIdeaSuggestions()" class="px-3.5 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-lg text-xs font-semibold transition">
+                                        ✨ 生成參考說法
+                                    </button>
+                                    <span class="text-[11px] text-slate-400">參考說法，非標準答案</span>
+                                </div>
+
+                                <div id="bigidea-suggestions-container" class="hidden pt-2 space-y-2">
+                                    <!-- Dynamic suggestions -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between pt-4">
+                            <button onclick="app.goToStep(1)" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回上一頁
+                            </button>
+                            <button onclick="app.goToStep(3)" class="px-6 py-2.5 rounded-xl bg-brand-900 hover:bg-brand-800 text-white font-medium text-xs shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                                <span>前往探究問題設計</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            toggleConcept(conceptId) {
+                const c = this.getCurrentCourse();
+                if (!c.selectedConcepts) c.selectedConcepts = [];
+                const idx = c.selectedConcepts.indexOf(conceptId);
+                if (idx > -1) {
+                    c.selectedConcepts.splice(idx, 1);
+                } else {
+                    c.selectedConcepts.push(conceptId);
+                }
+                this.saveCourses();
+                this.renderView('step2');
+            }
+
+            generateBigIdeaSuggestions() {
+                const c = this.getCurrentCourse();
+                const container = document.getElementById('bigidea-suggestions-container');
+                if (!container) return;
+
+                const conceptsText = c.selectedConcepts && c.selectedConcepts.length > 0 ? 
+                    c.selectedConcepts.map(id => {
+                        const item = CORE_CONCEPTS.find(x => x.id === id);
+                        return item ? item.zh : id;
+                    }).join('與') : '個人選擇';
+
+                this.lastBigIdeaSuggestions = [
+                    `人們在「${c.topic || '此主題'}」中的抉擇，會透過「${conceptsText}」深刻影響我們的生活與未來環境。`,
+                    `當我們理解「${c.topic || '這項議題'}」背後的「${conceptsText}」，就能在日常生活中做出負責任的行動。`,
+                    `理解「${conceptsText}」能幫助我們從不同角度審視「${c.topic || '這項問題'}」，並找到永續的解決之道。`
+                ];
+
+                container.innerHTML = `
+                    <div class="font-bold text-amber-300 mb-2 text-xs">💡 參考說法（點擊即可帶入文字框）：</div>
+                    <div class="space-y-2">
+                        ${this.lastBigIdeaSuggestions.map((s, idx) => `
+                            <div onclick="app.applyBigIdeaSuggestionByIndex(${idx})" class="p-2.5 rounded-lg bg-white/10 hover:bg-white/20 transition cursor-pointer border border-white/10 text-xs flex items-start space-x-2">
+                                <span class="font-bold text-amber-400">${idx+1}.</span>
+                                <span class="flex-1">${this.escapeHtml(s)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.classList.remove('hidden');
+            }
+
+            applyBigIdeaSuggestionByIndex(index) {
+                if (!this.lastBigIdeaSuggestions || !this.lastBigIdeaSuggestions[index]) return;
+                const text = this.lastBigIdeaSuggestions[index];
+                this.updateCourseField('bigIdea', text);
+                const input = document.getElementById('input-bigidea');
+                if (input) input.value = text;
+                this.showToast('已代入 Big Idea 建議');
+            }
+
+            templateStep3() {
+                const c = this.getCurrentCourse();
+                if (!c.inquiryQuestions) c.inquiryQuestions = [];
+
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Step Header -->
+                        <div class="space-y-2 border-b border-slate-200 pb-5">
+                            <div class="flex items-center space-x-2 text-brand-900 text-sm font-bold">
+                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs">3</span>
+                                <span>第三站</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">③ 探究：什麼問題值得學生自己想？</h2>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                有了「我希望學生理解什麼」，下一步不是直接告訴學生答案。<br>
+                                請想想：<span class="font-bold text-brand-900">學生要先遇到什麼問題，才有機會形成這個理解？</span>
+                            </p>
+                        </div>
+
+                        <!-- Current Big Idea Banner -->
+                        <div class="bg-brand-50 border border-brand-200 p-4 rounded-xl space-y-1 text-xs">
+                            <span class="font-bold text-brand-900 uppercase tracking-wider">我們的核心理解 Target Big Idea：</span>
+                            <p class="text-sm font-bold text-slate-800">${this.escapeHtml(c.bigIdea || '尚未寫下核心理解 (可回第二站補充)')}</p>
+                        </div>
+
+                        <!-- Add Questions Section -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <h3 class="text-lg font-bold text-slate-900">🔎 參考探究卡，設計核心探究問題</h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                ${INQUIRY_CARDS.map((ic, cardIdx) => `
+                                    <div class="p-3.5 rounded-xl border border-slate-200 hover:border-brand-300 bg-slate-50 space-y-2">
+                                        <div class="font-bold text-slate-800 text-xs flex items-center justify-between">
+                                            <span>${this.escapeHtml(ic.name)}</span>
+                                            <button onclick="app.addInquiryQuestionByCardIndex(${cardIdx})" class="text-[11px] text-brand-600 hover:underline font-semibold">
+                                                ＋ 帶入範例
+                                            </button>
+                                        </div>
+                                        <p class="text-[11px] text-slate-500 leading-tight">${this.escapeHtml(ic.prompt)}</p>
+                                        <div class="text-[11px] text-slate-600 italic bg-white p-2 rounded border border-slate-100">
+                                            「${this.escapeHtml(ic.example)}」
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Questions list -->
+                            <div class="pt-4 border-t border-slate-200 space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-slate-900 text-xs">已設定的探究問題列表 (${c.inquiryQuestions.length})</h4>
+                                    <span class="text-xs text-slate-500">🎯 建議保留 1–3 個最核心問題</span>
+                                </div>
+
+                                ${c.inquiryQuestions.length === 0 ? `
+                                    <div class="text-center py-8 border-2 border-dashed border-slate-200 rounded-xl text-xs text-slate-400">
+                                        目前尚未建立探究問題。請從上方選擇範例，或直接新增問題。
+                                    </div>
+                                ` : `
+                                    <div class="space-y-3">
+                                        ${c.inquiryQuestions.map((q, idx) => `
+                                            <div class="flex items-start space-x-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs font-bold mt-1 shrink-0">${idx + 1}</span>
+                                                <input type="text" value="${this.escapeHtml(q.text)}" 
+                                                    oninput="app.updateInquiryQuestion('${q.id}', this.value)"
+                                                    class="flex-1 px-3 py-1.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-600 text-xs text-slate-800">
+                                                <button onclick="app.removeInquiryQuestion('${q.id}')" class="text-slate-400 hover:text-red-600 p-2 text-xs transition">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                `}
+
+                                <button onclick="app.addInquiryQuestion('Notice', '')" class="w-full py-2.5 rounded-xl border border-dashed border-slate-300 text-slate-600 hover:bg-slate-50 text-xs font-semibold transition">
+                                    ＋ 自訂新的探究問題
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between pt-4">
+                            <button onclick="app.goToStep(2)" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回上一頁
+                            </button>
+                            <button onclick="app.goToStep(4)" class="px-6 py-2.5 rounded-xl bg-brand-900 hover:bg-brand-800 text-white font-medium text-xs shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                                <span>前往設計學習經驗</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            addInquiryQuestionByCardIndex(cardIndex) {
+                const card = INQUIRY_CARDS[cardIndex];
+                if (!card) return;
+                this.addInquiryQuestion(card.type, card.example);
+            }
+
+            addInquiryQuestion(type, defaultText) {
+                const c = this.getCurrentCourse();
+                if (!c.inquiryQuestions) c.inquiryQuestions = [];
+                c.inquiryQuestions.push({
+                    id: 'q_' + Date.now(),
+                    type: type,
+                    text: defaultText || '請填入探究問題...'
+                });
+                this.saveCourses();
+                this.renderView('step3');
+            }
+
+            updateInquiryQuestion(id, text) {
+                const c = this.getCurrentCourse();
+                if (!c || !c.inquiryQuestions) return;
+                const q = c.inquiryQuestions.find(x => x.id === id);
+                if (q) {
+                    q.text = text;
+                    this.saveCourses();
+                }
+            }
+
+            removeInquiryQuestion(id) {
+                const c = this.getCurrentCourse();
+                if (!c || !c.inquiryQuestions) return;
+                c.inquiryQuestions = c.inquiryQuestions.filter(x => x.id !== id);
+                this.saveCourses();
+                this.renderView('step3');
+            }
+
+            templateStep4() {
+                const c = this.getCurrentCourse();
+                if (!c.learningExperiences) c.learningExperiences = [];
+                if (!c.crossCurricularConnections) c.crossCurricularConnections = [];
+
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Step Header -->
+                        <div class="space-y-2 border-b border-slate-200 pb-5">
+                            <div class="flex items-center space-x-2 text-brand-900 text-sm font-bold">
+                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs">4</span>
+                                <span>第四站</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">④ 設計：學生要經歷什麼，才有機會自己發現？</h2>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                現在才回到「教學活動」。先問：<span class="font-bold text-brand-900">學生需要經歷什麼體驗，才有機會回答剛才的問題？</span>
+                            </p>
+                        </div>
+
+                        <!-- Warm Reminder Box -->
+                        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start space-x-3 text-xs text-amber-900">
+                            <i class="fa-solid fa-heart text-amber-600 text-lg mt-0.5"></i>
+                            <div class="leading-relaxed">
+                                <strong>💡 溫暖提示：</strong><br>
+                                想一想：「如果拿掉這個活動，學生還有機會回答核心問題嗎？」如果答案是「有」，可能代表活動可以再簡化；如果答案是「不容易」，這個活動就具有真正的學習價值。
+                            </div>
+                        </div>
+
+                        <!-- Learning Experiences List & Add -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <h3 class="text-lg font-bold text-slate-900">🧩 規劃探究學習活動 (Experience Cards)</h3>
+
+                            <!-- Form to add experience -->
+                            <div class="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200 space-y-4">
+                                <h4 class="text-xs font-bold text-slate-700">＋ 新增一項學習活動</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div class="space-y-1">
+                                        <label class="text-[11px] font-bold text-slate-600">體驗類型</label>
+                                        <select id="exp-type-select" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs bg-white">
+                                            ${EXPERIENCE_TYPES.map(t => `<option value="${t.id}">${t.name}</option>`).join('')}
+                                        </select>
+                                    </div>
+                                    <div class="sm:col-span-2 space-y-1">
+                                        <label class="text-[11px] font-bold text-slate-600">活動名稱</label>
+                                        <input id="exp-name-input" type="text" placeholder="例如：校園廚餘大追蹤、跨界訪談..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs">
+                                    </div>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="text-[11px] font-bold text-slate-600">① 學生要做什麼？</label>
+                                    <input id="exp-what-input" type="text" placeholder="例如：分組記錄全校各年級一週廚餘重量..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs">
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="text-[11px] font-bold text-slate-600">② 他可能自己發現什麼？</label>
+                                    <input id="exp-discovery-input" type="text" placeholder="例如：發現蔬菜剩餘最多，低年級比例較高..." class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs">
+                                </div>
+
+                                <button onclick="app.addLearningExperience()" class="w-full py-2.5 bg-brand-900 hover:bg-brand-800 text-white font-bold rounded-xl text-xs transition shadow">
+                                    ＋ 加入這項學習活動
+                                </button>
+                            </div>
+
+                            <!-- Experiences List -->
+                            <div class="space-y-3">
+                                ${c.learningExperiences.length === 0 ? `
+                                    <div class="text-center py-8 border-2 border-dashed border-slate-200 rounded-xl text-xs text-slate-400">
+                                        目前尚未建立學習活動。請填寫上方欄位新增。
+                                    </div>
+                                ` : `
+                                    ${c.learningExperiences.map((exp) => `
+                                        <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2 relative">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-800 font-bold text-[11px] border border-brand-100">
+                                                        ${exp.type}
+                                                    </span>
+                                                    <h4 class="font-bold text-xs text-slate-900">${this.escapeHtml(exp.name)}</h4>
+                                                </div>
+                                                <button onclick="app.removeLearningExperience('${exp.id}')" class="text-slate-400 hover:text-red-600 text-xs p-1">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                            <div class="text-xs text-slate-600 space-y-1">
+                                                <div><strong>學生要做：</strong> ${this.escapeHtml(exp.what)}</div>
+                                                <div><strong>可能發現：</strong> ${this.escapeHtml(exp.discovery)}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                `}
+                            </div>
+                        </div>
+
+                        <!-- Cross Curricular Section -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-900">🔗 跨領域連結 (可選)</h3>
+                                    <p class="text-xs text-slate-500">不要求每個課程都要跨領域。只是邀請你看看同一個概念是否也在其他領域被看見。</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                ${['數學','英語','社會','自然','藝術','資訊'].map(dom => {
+                                    const conn = c.crossCurricularConnections.find(x => x.domain === dom);
+                                    return `
+                                        <div class="p-3 rounded-xl border border-slate-200 text-xs space-y-1 bg-slate-50">
+                                            <div class="font-bold text-slate-700">${dom} 領域連結</div>
+                                            <input type="text" value="${this.escapeHtml(conn ? conn.detail : '')}" 
+                                                oninput="app.updateCrossCurricular('${dom}', this.value)"
+                                                placeholder="例如：計算廚餘重量百分比..." 
+                                                class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs">
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between pt-4">
+                            <button onclick="app.goToStep(3)" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回上一頁
+                            </button>
+                            <button onclick="app.goToStep(5)" class="px-6 py-2.5 rounded-xl bg-brand-900 hover:bg-brand-800 text-white font-medium text-xs shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                                <span>前往看見學習證據</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            addLearningExperience() {
+                const c = this.getCurrentCourse();
+                const typeSelect = document.getElementById('exp-type-select');
+                const nameInput = document.getElementById('exp-name-input');
+                const whatInput = document.getElementById('exp-what-input');
+                const discoveryInput = document.getElementById('exp-discovery-input');
+
+                if (!nameInput || !nameInput.value) {
+                    this.showToast('⚠️ 請先輸入活動名稱');
+                    return;
+                }
+
+                if (!c.learningExperiences) c.learningExperiences = [];
+                c.learningExperiences.push({
+                    id: 'exp_' + Date.now(),
+                    type: typeSelect ? typeSelect.value : 'Observe',
+                    name: nameInput.value,
+                    what: whatInput ? whatInput.value : '',
+                    discovery: discoveryInput ? discoveryInput.value : ''
+                });
+
+                this.saveCourses();
+                this.renderView('step4');
+            }
+
+            removeLearningExperience(id) {
+                const c = this.getCurrentCourse();
+                if (!c || !c.learningExperiences) return;
+                c.learningExperiences = c.learningExperiences.filter(x => x.id !== id);
+                this.saveCourses();
+                this.renderView('step4');
+            }
+
+            updateCrossCurricular(domain, detail) {
+                const c = this.getCurrentCourse();
+                if (!c.crossCurricularConnections) c.crossCurricularConnections = [];
+                let conn = c.crossCurricularConnections.find(x => x.domain === domain);
+                if (!conn) {
+                    conn = { domain, detail };
+                    c.crossCurricularConnections.push(conn);
+                } else {
+                    conn.detail = detail;
+                }
+                this.saveCourses();
+            }
+
+            templateStep5() {
+                const c = this.getCurrentCourse();
+
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Step Header -->
+                        <div class="space-y-2 border-b border-slate-200 pb-5">
+                            <div class="flex items-center space-x-2 text-brand-900 text-sm font-bold">
+                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs">5</span>
+                                <span>第五站</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">⑤ 看見學習：我怎麼知道學生真的懂了？</h2>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                完成活動不代表完成學習。請想一想：<span class="font-bold text-brand-900">如果學生真的理解你的 Big Idea，他會做出什麼不一樣的事情？</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <div class="space-y-2">
+                                <label class="block text-xs font-bold text-slate-900">我的學生需要呈現什麼理解證據？</label>
+                                <p class="text-xs text-slate-500">例如：學生能說明自己的午餐選擇如何影響剩食，並能提出一項減量提案。</p>
+                                <textarea rows="3" oninput="app.updateCourseField('evidence', this.value)" placeholder="請描述學生能說出、寫出或展現出來的具體理解..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none text-slate-800 text-xs leading-relaxed">${this.escapeHtml(c.evidence || '')}</textarea>
+                            </div>
+
+                            <!-- Performance Task Cards -->
+                            <div class="space-y-3 pt-4 border-t border-slate-200">
+                                <label class="block text-xs font-bold text-slate-900">🎯 選擇或自訂表現任務 (Performance Task)</label>
+                                <p class="text-xs text-slate-500">不是每個單元都需要大型專案，一次有理由的說明、一份比較、一次發表都是證據。</p>
+
+                                <div class="flex flex-wrap gap-2">
+                                    ${PERFORMANCE_TASKS.map((task, idx) => {
+                                        const isSelected = c.performanceTask === task;
+                                        return `
+                                            <button onclick="app.selectPerformanceTaskByIndex(${idx})" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${isSelected ? 'bg-brand-900 text-white border-brand-900 shadow' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'}">
+                                                ${this.escapeHtml(task)}
+                                            </button>
+                                        `;
+                                    }).join('')}
+                                </div>
+
+                                <div class="pt-2">
+                                    <input type="text" value="${this.escapeHtml(c.performanceTask || '')}" oninput="app.updateCourseField('performanceTask', this.value)" placeholder="或自行輸入表現任務名稱..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between pt-4">
+                            <button onclick="app.goToStep(4)" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回上一頁
+                            </button>
+                            <button onclick="app.goToStep(6)" class="px-6 py-2.5 rounded-xl bg-brand-900 hover:bg-brand-800 text-white font-medium text-xs shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                                <span>前往第六站：回頭看反思</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            selectPerformanceTaskByIndex(idx) {
+                const task = PERFORMANCE_TASKS[idx];
+                if (!task) return;
+                this.updateCourseField('performanceTask', task);
+                this.renderView('step5');
+            }
+
+            templateStep6() {
+                const c = this.getCurrentCourse();
+                if (!c.reflection) c.reflection = { student: '', curriculum: '', nextTime: '' };
+                if (!c.studentDevelopment) {
+                    c.studentDevelopment = {
+                        civic: { level: '', evidence: '' },
+                        collaboration: { level: '', evidence: '' },
+                        learningHabits: { level: '', evidence: '' },
+                        creativeThinking: { level: '', evidence: '' },
+                        lifePractice: { level: '', evidence: '' }
+                    };
+                }
+                if (!c.curriculumVision) {
+                    c.curriculumVision = {
+                        moral: { level: '', evidence: '' },
+                        quality: { level: '', evidence: '' },
+                        taste: { level: '', evidence: '' }
+                    };
+                }
+
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Step Header -->
+                        <div class="space-y-2 border-b border-slate-200 pb-5">
+                            <div class="flex items-center space-x-2 text-brand-900 text-sm font-bold">
+                                <span class="w-6 h-6 rounded-full bg-brand-900 text-white flex items-center justify-center text-xs">6</span>
+                                <span>第六站</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">⑥ 回頭看：這一次的課程讓我發現什麼？</h2>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                課程不是在最後一堂課結束。學生的表現，會幫助我們重新理解自己的課程。
+                            </p>
+                        </div>
+
+                        <!-- Reflection Cards -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <h3 class="text-base font-bold text-slate-900">🪞 課後省思 (Reflection Cards)</h3>
+
+                            <div class="space-y-4 text-xs">
+                                <div class="space-y-1">
+                                    <label class="font-bold text-slate-800">🪞 看見學生：哪一個學生的表現，讓你發現他真的理解了？</label>
+                                    <textarea rows="2" oninput="app.updateReflection('student', this.value)" placeholder="描述學生的具體反應、說出的話或行為變革..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 leading-relaxed">${this.escapeHtml(c.reflection.student || '')}</textarea>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="font-bold text-slate-800">🪞 看見課程：哪一個地方讓你發現原本的設計可以再更好？</label>
+                                    <textarea rows="2" oninput="app.updateReflection('curriculum', this.value)" placeholder="描述引導過程、時間安排或活動步驟調整..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 leading-relaxed">${this.escapeHtml(c.reflection.curriculum || '')}</textarea>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="font-bold text-slate-800">🪞 下一次：如果再教一次，我最想改變什麼？</label>
+                                    <textarea rows="2" oninput="app.updateReflection('nextTime', this.value)" placeholder="寫下未來的修正或延伸點子..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 leading-relaxed">${this.escapeHtml(c.reflection.nextTime || '')}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5 Student Directions -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">🌏 文昌學生發展的五個方向</h3>
+                                <p class="text-xs text-slate-500 pt-1">這不是考核指標。只是回頭看看：從我的這個單元來看，我在哪些地方看見了這些學生發展方向？</p>
+                            </div>
+
+                            <div class="space-y-4">
+                                ${[
+                                    { key: 'civic', name: '培養公民素養', desc: '能理解自己與他人的關係，關心公共議題，願意參與並承擔責任。' },
+                                    { key: 'collaboration', name: '激勵合作共學', desc: '能與他人溝通、合作、分享觀點，也能在共同學習中調整自己的想法。' },
+                                    { key: 'learningHabits', name: '形塑學習習慣', desc: '能主動學習、持續思考，遇到問題願意嘗試、修正與完成。' },
+                                    { key: 'creativeThinking', name: '應用創造思考', desc: '能從不同角度看問題，提出想法，嘗試新的方法與可能性。' },
+                                    { key: 'lifePractice', name: '落實生活實踐', desc: '能將學習帶回生活，在真實情境中做出選擇、解決問題與採取行動。' }
+                                ].map(dir => {
+                                    const data = c.studentDevelopment[dir.key] || { level: '', evidence: '' };
+                                    const isRelated = data.level === '很有關' || data.level === '有一點關係';
+                                    return `
+                                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+                                            <div>
+                                                <div class="font-bold text-xs text-slate-900">${dir.name}</div>
+                                                <div class="text-[11px] text-slate-500">${dir.desc}</div>
+                                            </div>
+                                            <div class="flex flex-wrap gap-2 text-xs">
+                                                ${['很有關', '有一點關係', '不太確定', '目前連不上'].map(lvl => `
+                                                    <button onclick="app.setDevelopmentLevel('${dir.key}', '${lvl}')" class="px-2.5 py-1 rounded-lg text-xs font-medium border transition ${data.level === lvl ? 'bg-sage-700 text-white border-sage-700 font-bold' : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-100'}">
+                                                        ${lvl}
+                                                    </button>
+                                                `).join('')}
+                                            </div>
+                                            ${isRelated ? `
+                                                <div class="pt-1">
+                                                    <input type="text" value="${this.escapeHtml(data.evidence || '')}" oninput="app.setDevelopmentEvidence('${dir.key}', this.value)" placeholder="我看到的證據是：例如學生在分組討論中主動聆聽..." class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs">
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+
+                        <!-- 3 Visions -->
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">🌱 我們正在討論：文昌想培養什麼樣的學生？</h3>
+                                <p class="text-xs text-slate-500 pt-1">目前學校正在討論三個可能的課程願景。以下定義仍在共備討論中，我們只是先用它們回頭看看自己的課程。</p>
+                            </div>
+
+                            <div class="space-y-4">
+                                ${[
+                                    { key: 'moral', name: '品德 Moral & Citizenship', desc: '能理解他人、尊重差異，願意合作溝通，並對自己的選擇、他人與環境負起責任。' },
+                                    { key: 'quality', name: '品質 Quality & Competence', desc: '能建立良好的學習態度，主動思考、探究與解決問題，並持續改善自己的學習與表現。' },
+                                    { key: 'taste', name: '品味 Taste & Life Application', desc: '能感受生活與文化中的美與差異，理解不同價值與觀點，形成自己的判斷，並將所學轉化為生活中的選擇與實踐。' }
+                                ].map(v => {
+                                    const data = c.curriculumVision[v.key] || { level: '', evidence: '' };
+                                    const isRelated = data.level === '很有關' || data.level === '有一點關係';
+                                    return `
+                                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+                                            <div>
+                                                <div class="font-bold text-xs text-slate-900">${v.name}</div>
+                                                <div class="text-[11px] text-slate-500">${v.desc}</div>
+                                            </div>
+                                            <div class="flex flex-wrap gap-2 text-xs">
+                                                ${['很有關', '有一點關係', '不太確定', '目前連不上'].map(lvl => `
+                                                    <button onclick="app.setVisionLevel('${v.key}', '${lvl}')" class="px-2.5 py-1 rounded-lg text-xs font-medium border transition ${data.level === lvl ? 'bg-brand-900 text-white border-brand-900 font-bold' : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-100'}">
+                                                        ${lvl}
+                                                    </button>
+                                                `).join('')}
+                                            </div>
+                                            ${isRelated ? `
+                                                <div class="pt-1">
+                                                    <input type="text" value="${this.escapeHtml(data.evidence || '')}" oninput="app.setVisionEvidence('${v.key}', this.value)" placeholder="我看到的證據是..." class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs">
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+
+                            <div class="pt-2">
+                                <label class="block text-xs font-bold text-slate-800">💭 還有其他重要的學生特質嗎？</label>
+                                <input type="text" value="${this.escapeHtml(c.otherTraits || '')}" oninput="app.updateCourseField('otherTraits', this.value)" placeholder="例如：好奇心、同理心、自信表達、批判思考、韌性..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs">
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between pt-4">
+                            <button onclick="app.goToStep(5)" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回上一頁
+                            </button>
+                            <button onclick="app.navTo('overview')" class="px-6 py-2.5 rounded-xl bg-sage-700 hover:bg-sage-900 text-white font-medium text-xs shadow-md hover:shadow-lg transition flex items-center space-x-2">
+                                <span>🎉 完成思考，檢視課程總覽</span>
+                                <i class="fa-solid fa-circle-check text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateReflection(key, val) {
+                const c = this.getCurrentCourse();
+                if (!c.reflection) c.reflection = {};
+                c.reflection[key] = val;
+                this.saveCourses();
+            }
+
+            setDevelopmentLevel(key, level) {
+                const c = this.getCurrentCourse();
+                if (!c.studentDevelopment[key]) c.studentDevelopment[key] = {};
+                c.studentDevelopment[key].level = level;
+                this.saveCourses();
+                this.renderView('step6');
+            }
+
+            setDevelopmentEvidence(key, val) {
+                const c = this.getCurrentCourse();
+                if (c.studentDevelopment[key]) {
+                    c.studentDevelopment[key].evidence = val;
+                    this.saveCourses();
+                }
+            }
+
+            setVisionLevel(key, level) {
+                const c = this.getCurrentCourse();
+                if (!c.curriculumVision[key]) c.curriculumVision[key] = {};
+                c.curriculumVision[key].level = level;
+                this.saveCourses();
+                this.renderView('step6');
+            }
+
+            setVisionEvidence(key, val) {
+                const c = this.getCurrentCourse();
+                if (c.curriculumVision[key]) {
+                    c.curriculumVision[key].evidence = val;
+                    this.saveCourses();
+                }
+            }
+
+            templateOverview() {
+                const c = this.getCurrentCourse();
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <!-- Top Banner -->
+                        <div class="bg-gradient-to-r from-slate-900 to-brand-900 text-white p-6 sm:p-8 rounded-2xl shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 no-print">
+                            <div class="space-y-1">
+                                <span class="text-xs font-bold text-brand-300 uppercase tracking-wider">Course Design Overview</span>
+                                <h2 class="text-2xl font-extrabold text-white">${this.escapeHtml(c.title || '未命名課程')}</h2>
+                                <p class="text-xs text-slate-300">${c.grade} ｜ ${c.domain} ｜ 設計者：${this.escapeHtml(c.teacher || '教師')}</p>
+                                <p class="text-[11px] text-amber-300/90 pt-1"><i class="fa-solid fa-circle-info mr-1"></i>下載 Word (.docx) 後，可在 Microsoft Word 或 Google 文件中『另存為 PDF』。</p>
+                            </div>
+                            <div class="flex items-center space-x-2 shrink-0">
+                                <button onclick="app.exportWord()" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold shadow-md transition flex items-center space-x-2">
+                                    <i class="fa-solid fa-file-word text-sm"></i>
+                                    <span>下載完整 Word (.docx)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Document Body -->
+                        <div class="bg-white p-8 sm:p-12 rounded-2xl border border-slate-200 shadow-sm space-y-8 text-slate-800 card-box">
+                            <!-- Printable Header -->
+                            <div class="text-center space-y-2 border-b border-slate-200 pb-6">
+                                <h1 class="text-2xl font-extrabold text-slate-900">臺北市文昌國民小學國際教育課程設計思考地圖</h1>
+                                <p class="text-xs text-slate-500">Wenchang Global Curriculum Design Document</p>
+                            </div>
+
+                            <!-- Section 1: Basic Info -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">一、課程基本資料</h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+                                    <div><strong>單元主題：</strong>${this.escapeHtml(c.topic || '-')}</div>
+                                    <div><strong>年級：</strong>${c.grade}</div>
+                                    <div><strong>領域：</strong>${c.domain}</div>
+                                    <div><strong>設計教師：</strong>${this.escapeHtml(c.teacher || '-')}</div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Original Intent -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">二、課程起點</h3>
+                                <p class="text-xs leading-relaxed whitespace-pre-line">${this.escapeHtml(c.originalTeachingIntention || '無紀錄')}</p>
+                            </div>
+
+                            <!-- Section 3: Deep Thinking & Concepts -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">三、核心概念與核心理解 (Big Idea)</h3>
+                                <div class="text-xs space-y-1">
+                                    <div><strong>深層思考：</strong>${this.escapeHtml(c.deepThinking || '-')}</div>
+                                    <div><strong>選擇的核心概念：</strong>${(c.selectedConcepts || []).map(id => {
+                                        const found = CORE_CONCEPTS.find(x => x.id === id);
+                                        return found ? found.name : id;
+                                    }).join('、 ') || '無'}</div>
+                                    <div class="p-3 rounded-xl bg-brand-50 border border-brand-100 mt-2 font-semibold text-brand-950">
+                                        🎯 Target Big Idea：${this.escapeHtml(c.bigIdea || '無紀錄')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 4: Inquiry Questions -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">四、核心探究問題 (Inquiry Questions)</h3>
+                                <ul class="list-disc list-inside text-xs space-y-1">
+                                    ${(c.inquiryQuestions || []).map(q => `<li>${this.escapeHtml(q.text)}</li>`).join('') || '<li>未填寫</li>'}
+                                </ul>
+                            </div>
+
+                            <!-- Section 5: Learning Experiences -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">五、探究學習活動 (Learning Experiences)</h3>
+                                <div class="space-y-3">
+                                    ${(c.learningExperiences || []).map(exp => `
+                                        <div class="p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                                            <div class="font-bold text-slate-900">【${exp.type}】${this.escapeHtml(exp.name)}</div>
+                                            <div><strong>學生要做：</strong>${this.escapeHtml(exp.what)}</div>
+                                            <div><strong>可能發現：</strong>${this.escapeHtml(exp.discovery)}</div>
+                                        </div>
+                                    `).join('') || '<p class="text-xs text-slate-400">無紀錄</p>'}
+                                </div>
+                            </div>
+
+                            <!-- Section 6: Cross Curricular -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">六、跨領域連結</h3>
+                                <div class="text-xs space-y-1">
+                                    ${(c.crossCurricularConnections || []).filter(x => x.detail).map(cc => `
+                                        <div><strong>${cc.domain}：</strong>${this.escapeHtml(cc.detail)}</div>
+                                    `).join('') || '<p class="text-xs text-slate-400">無特別設定</p>'}
+                                </div>
+                            </div>
+
+                            <!-- Section 7: Evidence & Tasks -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">七、理解證據與表現任務</h3>
+                                <div class="text-xs space-y-2">
+                                    <div><strong>理解證據描述：</strong>${this.escapeHtml(c.evidence || '-')}</div>
+                                    <div><strong>雙語表現任務：</strong><span class="px-2.5 py-1 rounded bg-slate-100 border border-slate-200 font-bold">${this.escapeHtml(c.performanceTask || '-')}</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Section 8: Reflection -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">八、教師課後反思</h3>
+                                <div class="text-xs space-y-1">
+                                    <div><strong>看見學生：</strong>${this.escapeHtml(c.reflection?.student || '-')}</div>
+                                    <div><strong>看見課程：</strong>${this.escapeHtml(c.reflection?.curriculum || '-')}</div>
+                                    <div><strong>下一次改進：</strong>${this.escapeHtml(c.reflection?.nextTime || '-')}</div>
+                                </div>
+                            </div>
+
+                            <!-- Section 9: 5 Student Directions -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">九、文昌學生發展的五個方向展現</h3>
+                                <div class="text-xs space-y-2">
+                                    ${Object.entries(c.studentDevelopment || {}).map(([key, val]) => `
+                                        <div><strong>${key}：</strong>${val.level || '未標示'} ${val.evidence ? `(證據：${this.escapeHtml(val.evidence)})` : ''}</div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <!-- Section 10: 3 Visions -->
+                            <div class="space-y-2">
+                                <h3 class="text-base font-bold text-brand-900 border-b border-brand-100 pb-1">十、課程願景檢視 (品德、品質、品味)</h3>
+                                <div class="text-xs space-y-2">
+                                    ${Object.entries(c.curriculumVision || {}).map(([key, val]) => `
+                                        <div><strong>${key}：</strong>${val.level || '未標示'} ${val.evidence ? `(證據：${this.escapeHtml(val.evidence)})` : ''}</div>
+                                    `).join('')}
+                                    ${c.otherTraits ? `<div><strong>其他發展特質：</strong>${this.escapeHtml(c.otherTraits)}</div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center justify-between no-print pt-4">
+                            <button onclick="app.goToStep(6)" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 transition font-medium text-xs">
+                                ← 回反思頁
+                            </button>
+                            <button onclick="app.navTo('courses')" class="px-6 py-2.5 rounded-xl bg-brand-900 text-white hover:bg-brand-800 font-medium text-xs shadow transition">
+                                📂 回我的課程列表
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            templateCourses() {
+                return `
+                    <div class="max-w-5xl mx-auto space-y-6 page-transition">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-4 gap-3">
+                            <div>
+                                <h2 class="text-2xl font-bold text-slate-900">📂 我的課程設計列表</h2>
+                                <p class="text-xs text-slate-500 pt-1">保存在此瀏覽器的全套課程思考紀錄 (請記得隨時下載 Word 備份)</p>
+                            </div>
+                            <button onclick="app.createNewCourse()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition shadow shrink-0">
+                                ＋ 新建課程
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${this.courses.map(c => `
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3 relative hover:border-brand-300 transition">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <span class="px-2 py-0.5 rounded bg-brand-50 text-brand-800 text-[10px] font-bold">${c.grade} ｜ ${c.domain}</span>
+                                            <h3 class="text-base font-bold text-slate-900 pt-1">${this.escapeHtml(c.title || '未命名課程')}</h3>
+                                        </div>
+                                        <button onclick="app.askDeleteCourse('${c.id}')" class="text-slate-400 hover:text-red-600 p-1 text-xs">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+
+                                    <p class="text-xs text-slate-500 line-clamp-2">${this.escapeHtml(c.bigIdea || c.originalTeachingIntention || '尚未填寫核心理解...')}</p>
+
+                                    <div class="pt-2 flex items-center justify-between text-xs border-t border-slate-100">
+                                        <span class="text-slate-400 text-[11px]">更新於 ${c.updatedAt}</span>
+                                        <div class="space-x-2">
+                                            <button onclick="app.loadAndOpenCourse('${c.id}', 'overview')" class="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-xs">
+                                                查看總覽
+                                            </button>
+                                            <button onclick="app.loadAndOpenCourse('${c.id}', 'step${c.currentStep || 1}')" class="px-3 py-1.5 rounded-lg bg-brand-900 text-white hover:bg-brand-800 font-semibold text-xs">
+                                                繼續編輯
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            loadAndOpenCourse(id, view) {
+                this.currentCourseId = id;
+                this.navTo(view);
+            }
+
+            askDeleteCourse(id) {
+                this.pendingDeleteId = id;
+                const modal = document.getElementById('confirm-modal');
+                if (modal) modal.classList.remove('hidden');
+            }
+
+            closeConfirmModal() {
+                this.pendingDeleteId = null;
+                const modal = document.getElementById('confirm-modal');
+                if (modal) modal.classList.add('hidden');
+            }
+
+            confirmDeleteCourse() {
+                if (!this.pendingDeleteId) return;
+                this.courses = this.courses.filter(c => c.id !== this.pendingDeleteId);
+                if (this.courses.length > 0) {
+                    this.currentCourseId = this.courses[0].id;
+                } else {
+                    this.createDemoCourse();
+                }
+                this.saveCourses();
+                this.closeConfirmModal();
+                this.renderView('courses');
+                this.showToast('課程已成功刪除');
+            }
+
+            templateMap() {
+                const total = this.courses.length;
+                
+                const directions = [
+                    { key: 'civic', name: '培養公民素養' },
+                    { key: 'collaboration', name: '激勵合作共學' },
+                    { key: 'learningHabits', name: '形塑學習習慣' },
+                    { key: 'creativeThinking', name: '應用創造思考' },
+                    { key: 'lifePractice', name: '落實生活實踐' }
+                ];
+
+                const visions = [
+                    { key: 'moral', name: '品德 Moral & Citizenship' },
+                    { key: 'quality', name: '品質 Quality & Competence' },
+                    { key: 'taste', name: '品味 Taste & Life Application' }
+                ];
+
+                const dirStats = directions.map(d => {
+                    const strong = this.courses.filter(c => c.studentDevelopment?.[d.key]?.level === '很有關').length;
+                    const partial = this.courses.filter(c => c.studentDevelopment?.[d.key]?.level === '有一點關係').length;
+                    return { ...d, strong, partial, total: strong + partial };
+                });
+
+                const visionStats = visions.map(v => {
+                    const strong = this.courses.filter(c => c.curriculumVision?.[v.key]?.level === '很有關').length;
+                    const partial = this.courses.filter(c => c.curriculumVision?.[v.key]?.level === '有一點關係').length;
+                    return { ...v, strong, partial, total: strong + partial };
+                });
+
+                const allEvidences = [];
+                this.courses.forEach(c => {
+                    directions.forEach(d => {
+                        const ev = c.studentDevelopment?.[d.key]?.evidence;
+                        if (ev) allEvidences.push({ courseTitle: c.title || '未命名課程', topic: d.name, text: ev });
+                    });
+                    visions.forEach(v => {
+                        const ev = c.curriculumVision?.[v.key]?.evidence;
+                        if (ev) allEvidences.push({ courseTitle: c.title || '未命名課程', topic: v.name, text: ev });
+                    });
+                    if (c.otherTraits) {
+                        allEvidences.push({ courseTitle: c.title || '未命名課程', topic: '其他特質', text: c.otherTraits });
+                    }
+                });
+
+                return `
+                    <div class="max-w-5xl mx-auto space-y-8 page-transition">
+                        <div class="space-y-2 border-b border-slate-200 pb-4">
+                            <h2 class="text-2xl font-bold text-slate-900">🌏 文昌共同學生特質地圖</h2>
+                            <p class="text-xs text-slate-500">這不是評比與排行。這張地圖幫助全校看見：我們的課程正在共同培養什麼樣的文昌學生。</p>
+                        </div>
+
+                        <!-- Info Banner -->
+                        <div class="bg-brand-50 border border-brand-200 p-5 rounded-2xl text-xs text-brand-900 space-y-2">
+                            <div class="font-bold text-sm">💡 共同特質地圖說明</div>
+                            <p class="leading-relaxed">
+                                目前共有 <strong>${total}</strong> 份課程設計記錄。數字多不代表比較好，數字少也不代表沒有培養。地圖幫助我們發現已經形成的共識，以及未來值得攜手深化探究的方向。
+                            </p>
+                        </div>
+
+                        <!-- 5 Student Directions Summary -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">九、文昌學生發展的五個方向統計</h3>
+                            <div class="space-y-3">
+                                ${dirStats.map(d => `
+                                    <div class="space-y-1 text-xs">
+                                        <div class="flex items-center justify-between font-bold text-slate-800">
+                                            <span>${d.name}</span>
+                                            <span class="text-brand-600">${d.total} 份課程相關 (${d.strong} 很有關 / ${d.partial} 有一點關係)</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex">
+                                            <div class="bg-brand-600 h-full" style="width: ${total > 0 ? (d.strong / total) * 100 : 0}%"></div>
+                                            <div class="bg-brand-300 h-full" style="width: ${total > 0 ? (d.partial / total) * 100 : 0}%"></div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- 3 Visions Summary -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">十、課程願景檢視 (品德、品質、品味)</h3>
+                            <div class="space-y-3">
+                                ${visionStats.map(v => `
+                                    <div class="space-y-1 text-xs">
+                                        <div class="flex items-center justify-between font-bold text-slate-800">
+                                            <span>${v.name}</span>
+                                            <span class="text-sage-700 font-bold">${v.total} 份課程相關 (${v.strong} 很有關 / ${v.partial} 有一點關係)</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex">
+                                            <div class="bg-sage-700 h-full" style="width: ${total > 0 ? (v.strong / total) * 100 : 0}%"></div>
+                                            <div class="bg-sage-300 h-full" style="width: ${total > 0 ? (v.partial / total) * 100 : 0}%"></div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Evidence Collection -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">📌 全校課程觀察到的具體證據記錄 (${allEvidences.length})</h3>
+                            ${allEvidences.length === 0 ? `
+                                <p class="text-xs text-slate-400">目前尚無教師留下具體觀察證據。</p>
+                            ` : `
+                                <div class="space-y-2 max-h-80 overflow-y-auto pr-2">
+                                    ${allEvidences.map(ev => `
+                                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
+                                            <div class="flex items-center justify-between text-slate-500 text-[11px]">
+                                                <span class="font-bold text-brand-800">${this.escapeHtml(ev.courseTitle)}</span>
+                                                <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-medium">${this.escapeHtml(ev.topic)}</span>
+                                            </div>
+                                            <p class="text-slate-800 leading-relaxed">「${this.escapeHtml(ev.text)}」</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }
+
+            templateGlobalCards() {
+                return `
+                    <div class="max-w-6xl mx-auto space-y-8 page-transition">
+                        <div class="space-y-2 border-b border-slate-200 pb-4">
+                            <h2 class="text-2xl font-bold text-slate-900">🃏 全球思考卡庫 (Global Thinking Cards)</h2>
+                            <p class="text-xs text-slate-500">不是標準答案，而是幫助我們備課時多想一步的支架工具。</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${CORE_CONCEPTS.map(c => `
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3 flex flex-col justify-between">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">${c.id}</span>
+                                            <span class="text-xs font-bold text-slate-900">${c.zh}</span>
+                                        </div>
+                                        <p class="text-xs text-slate-600 leading-relaxed font-semibold">「${c.childDesc}」</p>
+                                        <p class="text-[11px] text-slate-500">${c.desc}</p>
+                                    </div>
+                                    <button onclick="app.showConceptDetailModal('${c.id}')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition mt-2">
+                                        🔍 查看完整的 15 個提問範例
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            templateAbout() {
+                return `
+                    <div class="max-w-4xl mx-auto space-y-8 page-transition">
+                        <div class="space-y-2 border-b border-slate-200 pb-4">
+                            <h2 class="text-2xl font-bold text-slate-900">❓ 這個工具怎麼使用？</h2>
+                            <p class="text-xs text-slate-500">關於設計理念、存檔與常見疑問</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 text-xs leading-relaxed text-slate-700">
+                            <h3 class="text-sm font-bold text-slate-900">💡 備課原則與存檔安全說明</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>不求一次完成：</strong> 課程會自動存檔於本機瀏覽器，可隨時修改。</li>
+                                <li><strong>備份下載原則：</strong> 若清除瀏覽器快取、使用無痕模式或更換電腦，瀏覽器內的暫存資料可能清除。建議完成思考後，點選「下載 Word (.docx)」將完整的課程備份儲存至您的電腦。</li>
+                                <li><strong>不求每一格都填：</strong> 不是每個單元都必須有大型專案或跨領域。</li>
+                                <li><strong>先想「為什麼」，再想「怎麼做」：</strong> 活動很多，但真正重要的是這個活動為什麼值得學生經歷。</li>
+                            </ul>
+
+                            <div class="pt-4 border-t border-slate-200 space-y-2">
+                                <h3 class="text-sm font-bold text-slate-900">🌏 關於設計者與理念來源</h3>
+                                <p>本工具由臺北市文昌國民小學 鍾靜宜老師設計。</p>
+                                <p>參考概念本位、探究導向與以理解為核心的國際課程設計理念，並依文昌國小課程發展需求進行轉化與調整。</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            showConceptDetailModal(conceptId) {
+                const c = CORE_CONCEPTS.find(x => x.id === conceptId);
+                if (!c) return;
+
+                const modal = document.getElementById('concept-modal');
+                const content = document.getElementById('concept-modal-content');
+                if (!modal || !content) return;
+
+                content.innerHTML = `
+                    <div class="space-y-1 pr-6">
+                        <div class="text-xs font-bold text-brand-600 uppercase tracking-wider">核心概念卡片詳情</div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">${this.escapeHtml(c.name)}</h3>
+                    </div>
+                    
+                    <div class="space-y-4 text-xs">
+                        <div class="bg-brand-50 p-4 rounded-xl border border-brand-100 text-brand-900 space-y-1">
+                            <strong class="text-xs font-bold uppercase text-brand-800">👧🏻 國小學生好懂的童言童語說明：</strong>
+                            <p class="text-xs font-semibold leading-relaxed">「${this.escapeHtml(c.childDesc || c.desc)}」</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <strong class="text-slate-800">💡 概念核心說明：</strong>
+                            <p class="text-slate-600 leading-relaxed">${this.escapeHtml(c.desc)}</p>
+                        </div>
+
+                        <div class="space-y-3 pt-2 border-t border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-xs">❓ 探究提問設計引導 (事實性、概念性、辯論性各 5 個範例)：</h4>
+
+                            <div class="bg-blue-50/70 p-3.5 rounded-xl border border-blue-100 space-y-2">
+                                <div class="font-bold text-blue-900 text-xs">📌 事實性提問 (Factual Questions x5)</div>
+                                <ol class="list-decimal list-inside text-xs text-blue-950 space-y-1">
+                                    ${c.questions.factual.map(q => `<li>${this.escapeHtml(q)}</li>`).join('')}
+                                </ol>
+                            </div>
+
+                            <div class="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-100 space-y-2">
+                                <div class="font-bold text-emerald-900 text-xs">💡 概念性提問 (Conceptual Questions x5)</div>
+                                <ol class="list-decimal list-inside text-xs text-emerald-950 space-y-1">
+                                    ${c.questions.conceptual.map(q => `<li>${this.escapeHtml(q)}</li>`).join('')}
+                                </ol>
+                            </div>
+
+                            <div class="bg-purple-50/70 p-3.5 rounded-xl border border-purple-100 space-y-2">
+                                <div class="font-bold text-purple-900 text-xs">⚖️ 辯論性提問 (Debatable Questions x5)</div>
+                                <ol class="list-decimal list-inside text-xs text-purple-950 space-y-1">
+                                    ${c.questions.debatable.map(q => `<li>${this.escapeHtml(q)}</li>`).join('')}
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3">
+                        <button onclick="app.closeConceptDetailModal()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition">
+                            關閉視窗
+                        </button>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+            }
+
+            closeConceptDetailModal() {
+                const modal = document.getElementById('concept-modal');
+                if (modal) modal.classList.add('hidden');
+            }
+        }
+
+        let app;
+        window.onload = function() {
+            app = new CurriculumApp();
+        };
+    </script>
+</body>
+</html>
